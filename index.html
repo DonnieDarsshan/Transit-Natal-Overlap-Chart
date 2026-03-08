@@ -190,7 +190,9 @@ button{
 /* Dark theme for dropdowns */
 #pivotSelect,
 #houseStart,
-#savMode{
+#savMode,
+#bavSelect{
+
     background:#000;
     color:var(--text-white);
     border:1px solid var(--grid-line);
@@ -222,7 +224,190 @@ button{
     color:var(--grid-line);
     font-weight:bold;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   CLEAN ASTRO TABLE STYLE
+   ========================================= */
+
+table{
+    background:#020617;
+    border-collapse:collapse;
+}
+
+table td, table th{
+    border:1px solid #334155;
+    padding:6px;
+    text-align:center;
+}
+
+/* =========================================
+   PLANET ASPECT TABLE COLORS
+   ========================================= */
+
+/* default cell color */
+#planetAspectTable td,
+#cuspAspectTable td{
+    color:#ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FIRST ROW (planet headers) */
+#planetAspectTable thead th,
+#cuspAspectTable thead th{
+    background:#0e006b;
+    color:#ffcc00;
+    font-weight:bold;
+}
+
+/* FIRST COLUMN (planet labels) */
+#planetAspectTable tbody td:first-child,
+#cuspAspectTable tbody td:first-child{
+    background:#0e006b;
+    color:#ffcc00;
+    font-weight:bold;
+}
+
+
+
+
+
+
+/* =========================================
+   ASPECT COLORS (same as base project)
+   ========================================= */
+
+.aspect-good{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+.aspect-bad{
+    color:#ef4444;
+    font-weight:bold;
+}
+
+.aspect-neutral{
+    color:#f59e0b;
+    font-weight:bold;
+}
+
+.aspect-white{
+    color:#facc15;
+    font-weight:bold;
+}
+
+
+
+
+
+
+
+
+
+
+#planetAspectTable,
+#cuspAspectTable{
+    width:100%;
+    table-layout:fixed;
+}
+
+#planetAspectTable th,
+#planetAspectTable td,
+#cuspAspectTable th,
+#cuspAspectTable td{
+    width:7.69%;
+    text-align:center;
+    padding:8px 6px;
+
+    white-space:normal;        /* allow wrapping */
+    word-break:break-word;     /* break long aspect names */
+    line-height:1.2;
+}
+
+
+
+
+
+#planetAspectTable,
+#cuspAspectTable{
+    table-layout:fixed;
+}
+
+#planetAspectTable td,
+#cuspAspectTable td{
+    vertical-align:middle;
+}
+
+
+
+
+
+
+
+#planetAspectPivot{
+    background:#000;
+    color:#ffffff;
+    border:1px solid #ffcc00;
+    padding:4px 8px;
+    font-weight:bold;
+}
+
+#planetAspectPivot option{
+    background:#000;
+    color:#ffffff;
+}
+
+
+
+
 </style>
+
+
+
+
+
+
+
+
+
+
+
 </head>
 <body>
 
@@ -355,7 +540,17 @@ HOUSE START
             <option value="Mangala">Mangala</option>
         </select>
     </label>
+	
+	
+	
+
+	
+	
+	
 </div>
+
+
+
 
 	
 	
@@ -368,7 +563,76 @@ HOUSE START
 
 
 <div id="chart" class="kundali"></div>
+
+
 <div id="savTable" style="width:850px;margin:40px auto 0 auto;"></div>
+
+
+
+
+
+<div style="width:850px;margin:40px auto 0 auto;text-align:center;">
+    <label style="font-weight:bold;">
+        BINNA ASHTAKAVARGA
+        <select id="bavSelect">
+            <option value="Saturn" selected>Saturn</option>
+            <option value="Jupiter">Jupiter</option>
+            <option value="Mangala">Mangala</option>
+            <option value="Surya">Surya</option>
+            <option value="Venus">Venus</option>
+            <option value="Budha">Budha</option>
+            <option value="Chandra">Chandra</option>
+            <option value="Lagna">Lagna</option>
+            <option value="Rahu">Rahu</option>
+        </select>
+    </label>
+</div>
+
+
+
+
+
+<div id="bavTable" style="width:850px;margin:10px auto 0 auto;"></div>
+
+
+
+
+
+
+<h2 style="margin-top:40px;text-align:center;">Transit → Natal Planet Aspects</h2>
+
+<div style="margin:8px 0 6px;text-align:center">
+Base Transit Planet :
+<select id="planetAspectPivot"></select>
+</div>
+
+<table id="planetAspectTable" style="width:100%;margin:0 auto;">
+<thead>
+<tr>
+<th>Transit Planet</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+
+<h2 style="margin-top:40px;text-align:center;">Transit → Natal Cusp Aspects</h2>
+
+<table id="cuspAspectTable" style="width:100%;margin:0 auto;">
+<thead>
+<tr>
+<th>Transit Planet</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+
+
+
+
+
+
 
 
 <script>
@@ -378,17 +642,16 @@ let transit = null;
 
 document.addEventListener("change",e=>{
     if(
-    e.target.id==="hideCusps" ||
-    e.target.id==="hideMinorTransit" ||
-    e.target.id==="hideRaKeTransit" ||
-    e.target.id==="includeRahuSAV" ||
-	e.target.id==="revertASC" ||
-	e.target.id==="savMode" ||
-	e.target.id==="pivotSelect" ||
-	e.target.id==="houseStart"
-
-) render();
-
+        e.target.id==="hideCusps" ||
+        e.target.id==="hideMinorTransit" ||
+        e.target.id==="hideRaKeTransit" ||
+        e.target.id==="includeRahuSAV" ||
+        e.target.id==="revertASC" ||
+        e.target.id==="savMode" ||
+        e.target.id==="pivotSelect" ||
+        e.target.id==="houseStart" ||
+        e.target.id==="bavSelect"
+    ) render();
 });
 
 
@@ -397,12 +660,36 @@ document.addEventListener("change",e=>{
 
 
 
-const planets = ["Surya","Chandra","Mangala","Budha","Jupiter","Venus","Saturn","Rahu","Ketu"];
+const planets = ["Saturn","Jupiter","Rahu","Ketu","Mangala","Venus","Budha","Surya","Chandra"];
 
 
 
 
 
+/* ===============================
+   TRANSIT ASPECT PIVOT DROPDOWN
+   =============================== */
+
+const planetAspectPivot = document.getElementById("planetAspectPivot");
+
+planetAspectPivot.innerHTML="";
+
+planets.forEach(p=>{
+    const opt=document.createElement("option");
+    opt.value=p;
+    opt.textContent=p;
+    planetAspectPivot.appendChild(opt);
+});
+
+planetAspectPivot.value="Saturn";
+
+
+
+
+planetAspectPivot.onchange=()=>{
+    buildTransitPlanetAspectTable();
+    buildTransitCuspAspectTable();
+};
 
 
 
@@ -1045,6 +1332,10 @@ map.forEach((idx, mapIndex)=>{
 		required.map(h=>h+"px").join(" ");
 		
 	renderSAVTable(nData);
+    renderBAVTable(nData);
+	
+	buildTransitPlanetAspectTable();
+	buildTransitCuspAspectTable();
 
 
 
@@ -1083,8 +1374,7 @@ function renderSAVTable(nData){
     table.style.borderCollapse="collapse";
     table.style.textAlign="center";
     table.style.fontSize="16px";
-    table.style.background="#111";
-    table.style.color="#fff";
+   
 
     function td(txt,bold=false){
         const c=document.createElement("td");
@@ -1162,7 +1452,7 @@ function renderSAVTable(nData){
 	// SIGN NAME ROW
 	const trH=document.createElement("tr");
 	trH.appendChild(td("Sign",true));
-	trH.style.background="#1f2937"; // dark blue-gray
+
 
 	signOrder.forEach(s=>{
     const shifted = ((s-1+signLabelOffset)%12)+1;
@@ -1178,7 +1468,7 @@ function renderSAVTable(nData){
 	// HOUSE NUMBER ROW
 	const trHouse=document.createElement("tr");
 	trHouse.appendChild(td("House",true));
-	trHouse.style.background="#3f1d2e"; // dark maroon
+
 
 	for(let i=1;i<=12;i++){
 		const c = td(i,true);
@@ -1324,7 +1614,411 @@ function renderSAVTable(nData){
 
 
 
+
+
+function renderBAVTable(nData){
+
+    const container = document.getElementById("bavTable");
+    container.innerHTML="";
+    if(!nData) return;
+
+    const target = document.getElementById("bavSelect")?.value || "Saturn";
+
+    const table = document.createElement("table");
+    table.style.width="100%";
+    table.style.borderCollapse="collapse";
+    table.style.textAlign="center";
+    table.style.fontSize="16px";
+   
+
+    function td(txt,bold=false){
+        const c=document.createElement("td");
+        c.textContent=txt;
+        c.style.border="1px solid #00e5ff";
+        c.style.padding="6px";
+        if(bold) c.style.fontWeight="bold";
+        return c;
+    }
+
+    const signNames = [
+        "Ars","Tau","Gem","Can","Leo","Vir",
+        "Lib","Scp","Sag","Cap","Aqu","Pis"
+    ];
+
+    /* ===============================
+       SAME SIGN ROTATION AS SAV TABLE
+       =============================== */
+
+    const pivot = document.getElementById("pivotSelect")?.value || "ASC";
+    const revertASC = document.getElementById("revertASC")?.checked;
+
+    let pivotDeg = nData.lagna;
+
+    if(pivot==="ASC"){
+        pivotDeg = nData.lagna;
+    }
+    else if(pivot.startsWith("C")){
+        const cNum = parseInt(pivot.substring(1));
+        pivotDeg = nData.cusps[cNum];
+    }
+    else if(nData.planets[pivot]!==undefined){
+        pivotDeg = nData.planets[pivot];
+    }
+
+    const pivotSign = Math.floor(pivotDeg/30);
+
+    const signOrder=[];
+    for(let i=0;i<12;i++){
+        signOrder.push(((pivotSign+i)%12)+1);
+    }
+
+    let signLabelOffset=0;
+    if((pivotDeg % 30)>=15 && !revertASC){
+        signLabelOffset=1;
+    }
+
+    /* ===============================
+       ROW 1 — SIGN NAMES
+       =============================== */
+
+    const trSign=document.createElement("tr");
+    
+    trSign.appendChild(td(target+" BAV",true));
+
+    signOrder.forEach(s=>{
+        const shifted=((s-1+signLabelOffset)%12)+1;
+        const c=td(signNames[shifted-1],true);
+        c.style.color="#00e5ff";
+        trSign.appendChild(c);
+    });
+
+    table.appendChild(trSign);
+
+    /* ===============================
+       ROW 2 — HOUSE NUMBERS
+       =============================== */
+
+    const trHouse=document.createElement("tr");
+ 
+    trHouse.appendChild(td("House",true));
+
+    for(let i=1;i<=12;i++){
+        const c=td(i,true);
+        c.style.color="#ffcc00";
+        trHouse.appendChild(c);
+    }
+
+    table.appendChild(trHouse);
+
+    /* ===============================
+       PLANET POSITIONS
+       =============================== */
+
+	   const contributors=[
+		"Surya","Chandra","Mangala","Budha",
+		"Jupiter","Venus","Saturn","Lagna"
+	];
+
+
+    const planets7=["Surya","Chandra","Mangala","Budha","Jupiter","Venus","Saturn"];
+
+    const posSign={};
+    planets7.forEach(p=>posSign[p]=Math.floor(nData.planets[p]/30));
+    posSign["Lagna"]=Math.floor(nData.lagna/30);
+
+    const grandTotal=Array(12).fill(0);
+
+    /* ===============================
+       CONTRIBUTOR ROWS
+       =============================== */
+
+    contributors.forEach(source=>{
+
+        const row=Array(12).fill(0);
+
+      {
+		const rules=BAV_RULES[target]?.[source];
+		const sSign=posSign[source];
+		if(rules){
+			rules.forEach(offset=>{
+				const z=(sSign+(offset-1))%12;
+				row[z]=1;
+				grandTotal[z]+=1;
+			});
+		}
+	}
+
+        const tr=document.createElement("tr");
+        tr.appendChild(td(source,true));
+
+        signOrder.forEach(sign=>{
+            tr.appendChild(td(row[sign-1]));
+        });
+
+        table.appendChild(tr);
+    });
+
+    /* ===============================
+       TOTAL ROW (colored)
+       =============================== */
+
+    const trTotal=document.createElement("tr");
+
+
+    trTotal.appendChild(td("Total",true));
+
+    signOrder.forEach(sign=>{
+        trTotal.appendChild(td(grandTotal[sign-1],true));
+    });
+
+    table.appendChild(trTotal);
+
+    container.appendChild(table);
+}
+
+
+/* ======================================================
+   ASPECT SYSTEM (same as rotation tool)
+   ====================================================== */
+
+const WESTERN_ASPECTS = [
+
+  /* ================= WHITE ================= */
+  { d:0,     o:8,   n:"Conjuct",  c:"aspect-white" },
+  { d:180,   o:8,   n:"Oppo",     c:"aspect-bad" },
+
+  /* ================= GREEN ================= */
+  { d:60,    o:6,   n:"Sextile",        c:"aspect-good" },
+  { d:120,   o:8,   n:"Trine",          c:"aspect-good" },
+  { d:72,    o:2,   n:"Quintile",       c:"aspect-good" },
+  { d:144,   o:2,   n:"Biquintile",     c:"aspect-good" },
+
+  /* ================= YELLOW ================= */
+  { d:18,    o:1,   n:"Vigintile",      c:"aspect-white" },
+  { d:36,    o:1,   n:"Decile",         c:"aspect-white" },
+  { d:54,    o:1,   n:"Tri-Vigintile",  c:"aspect-white" },
+  { d:40,    o:1.5, n:"Novile",         c:"aspect-white" },
+  { d:80,    o:1.5, n:"Binovile",       c:"aspect-white" },
+
+  /* ================= ORANGE ================= */
+  { d:30,    o:3,   n:"Semi-Sextile",   c:"aspect-good" },
+  { d:150,   o:4,   n:"Quincunx",       c:"aspect-bad" },
+
+  { d:51.43,  o:1.5, n:"Septile",       c:"aspect-neutral" },
+  { d:102.86, o:1.5, n:"Biseptile",     c:"aspect-neutral" },
+  { d:154.29, o:1.5, n:"Triseptile",    c:"aspect-neutral" },
+
+  /* ================= RED ================= */
+  { d:45,    o:3,   n:"Semi-Square",    c:"aspect-bad" },
+  { d:90,    o:8,   n:"Square",         c:"aspect-bad" },
+  { d:135,   o:3,   n:"Sesqui-Quadrate",c:"aspect-bad" },
+  { d:165,   o:2,   n:"Quin-Decile",    c:"aspect-bad" }
+];
+
+
+
+
+/* ======================================================
+   DEGREE QUALITY (FALLBACK — SAME AS ROTATION TOOL)
+   ====================================================== */
+
+function degreeQuality(diff){
+
+  if(
+    (diff>=0   && diff<=12)  ||
+    (diff>=54  && diff<=66)  ||
+    (diff>=114 && diff<=126)
+  ){
+    return {t:"Good",c:"aspect-good"};
+  }
+
+  if(
+    (diff>=39  && diff<=51)  ||
+    (diff>=84  && diff<=96)  ||
+    (diff>=129 && diff<=141) ||
+    (diff>=159 && diff<=171)
+  ){
+    return {t:"Bad",c:"aspect-bad"};
+  }
+
+  return {t:"Neutral",c:"aspect-neutral"};
+}
+
+
+
+
+
+
+function getAspectLabel(diff, rawDiff){
+
+  for(const a of WESTERN_ASPECTS){
+
+    if(a.d===0){
+      if(diff<=a.o){
+        return `<span class="${a.c}">${a.n}</span>`;
+      }
+    }
+
+    else if(a.d===180){
+      if(Math.abs(rawDiff-180)<=a.o){
+        return `<span class="${a.c}">${a.n}</span>`;
+      }
+    }
+
+    else{
+      if(Math.abs(diff-a.d)<=a.o){
+        return `<span class="${a.c}">${a.n}</span>`;
+      }
+    }
+
+  }
+
+  const q = degreeQuality(diff);
+return `<span class="${q.c}">${q.t}</span>`;
+}
+
+function absDiff(a,b){
+  let diff=Math.abs(a-b);
+  if(diff>180) diff=360-diff;
+  return diff;
+}
+
+/* ======================================================
+   TRANSIT → NATAL PLANET ASPECT TABLE
+   ====================================================== */
+
+function buildTransitPlanetAspectTable(){
+
+if(!natal || !transit) return;
+
+const nData = natal.ayanamshas["Lahiri"];
+const tData = transit.ayanamshas["Lahiri"];
+
+const table=document.querySelector("#planetAspectTable tbody");
+const head=document.querySelector("#planetAspectTable thead tr");
+
+const pivot = planetAspectPivot.value;
+
+const start = planets.indexOf(pivot);
+
+const ordered = [
+  ...planets.slice(start),
+  ...planets.slice(0,start)
+];
+
+head.innerHTML="<th>Transit</th>"+ordered.map(p=>{
+
+  const abs = nData.planets[p];
+
+  return `<th>${p}<br>${abs.toFixed(2)}°</th>`;
+
+}).join("");
+
+table.innerHTML="";
+
+ordered.forEach(p1=>{
+
+ const abs1=tData.planets[p1];
+
+ const tr=document.createElement("tr");
+
+ let html=`<td>${p1}<br>${abs1.toFixed(2)}°</td>`;
+
+ ordered.forEach(p2=>{
+
+    const abs2=nData.planets[p2];
+
+    const diff=absDiff(abs1,abs2);
+
+    html+=`<td>${getAspectLabel(diff,diff)}<br>${diff.toFixed(2)}°</td>`;
+
+ });
+
+ tr.innerHTML=html;
+ table.appendChild(tr);
+
+});
+
+}
+
+/* ======================================================
+   TRANSIT → NATAL CUSP ASPECT TABLE
+   ====================================================== */
+
+function buildTransitCuspAspectTable(){
+
+if(!natal || !transit) return;
+
+const nData = natal.ayanamshas["Lahiri"];
+const tData = transit.ayanamshas["Lahiri"];
+
+const table=document.querySelector("#cuspAspectTable tbody");
+const head=document.querySelector("#cuspAspectTable thead tr");
+
+head.innerHTML="<th>Transit</th>"+[...Array(12)].map((_,i)=>{
+
+ const c=nData.cusps[i+1];
+
+ return `<th>C${i+1}<br>${c.toFixed(2)}°</th>`;
+
+}).join("");
+
+table.innerHTML="";
+
+const pivot = planetAspectPivot.value;
+
+const start = planets.indexOf(pivot);
+
+const ordered = [
+  ...planets.slice(start),
+  ...planets.slice(0,start)
+];
+
+ordered.forEach(p=>{
+
+ const abs1=tData.planets[p];
+
+ const tr=document.createElement("tr");
+
+ let html=`<td>${p}<br>${abs1.toFixed(2)}°</td>`;
+
+ for(let i=1;i<=12;i++){
+
+   const c=nData.cusps[i];
+
+   const diff=absDiff(abs1,c);
+
+   html+=`<td>${getAspectLabel(diff,diff)}<br>${diff.toFixed(2)}°</td>`;
+
+ }
+
+ tr.innerHTML=html;
+ table.appendChild(tr);
+
+});
+
+}
+
+
+
+
+
+
+
+
+
+
 render();
+
+
+
+
+
+
+
+
+
+
 
 
 </script>
