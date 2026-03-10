@@ -100,16 +100,18 @@ button{
     justify-content:flex-start;
     align-items:center;
 
-    padding-top:36px;
-    padding-left:8px;
-    padding-right:60px;
-    padding-bottom:8px;
+    /* Centered Padding */
+    padding-top:45px; 
+    padding-left:5px;
+    padding-right:5px; 
+    padding-bottom:10px;
 
     box-sizing:border-box;
 
-    /* ⭐ KEY FIX — content stays inside cell */
-    overflow-y:auto;
-    overflow-x:hidden;
+    overflow:visible;
+    
+    /* Ensure text inside centers itself */
+    text-align: center; 
 }
 
 
@@ -160,11 +162,11 @@ button{
 
 .p-line{
     font-size:18px;
-    margin:2px 0;
+    margin:4px 0;
     font-weight:bold;
-    white-space:nowrap;     /* PREVENT LINE BREAK */
+    white-space:nowrap;
+    text-align:center;
 }
-
 
 
 
@@ -344,19 +346,20 @@ table td, table th{
 #planetAspectTable,
 #cuspAspectTable{
     width:100%;
+    max-width:1400px;
+    margin:0 auto;
     table-layout:fixed;
+    border-collapse:collapse;
 }
 
 #planetAspectTable th,
 #planetAspectTable td,
 #cuspAspectTable th,
 #cuspAspectTable td{
-    width:7.69%;
     text-align:center;
     padding:8px 6px;
-
-    white-space:normal;        /* allow wrapping */
-    word-break:break-word;     /* break long aspect names */
+    white-space:normal;
+    word-break:break-word;
     line-height:1.2;
 }
 
@@ -396,6 +399,63 @@ table td, table th{
 
 
 
+#doubleTransitTable{
+    width:100%;
+    table-layout:fixed;
+    border-collapse:collapse;
+    font-size:14px;
+}
+
+#doubleTransitTable th{
+    background:#0e006b;
+    color:#ffcc00;
+    font-weight:bold;
+}
+
+#doubleTransitTable td{
+    vertical-align:middle;
+}
+
+
+
+.collapsible{
+    cursor:pointer;
+    user-select:none;
+}
+
+.collapsible::after{
+    content:" ▼";
+    font-size:14px;
+}
+
+.collapsible.active::after{
+    content:" ▲";
+}
+
+.collapse-body{
+    display:none;
+}
+
+
+#doubleTransitTable th,
+#doubleTransitTable td{
+    border:1px solid #334155;
+    padding:6px;
+    text-align:center;
+    white-space:normal;
+    word-break:break-word;
+    line-height:1.2;
+}
+
+
+
+
+
+
+
+
+
+
 </style>
 
 
@@ -426,7 +486,7 @@ table td, table th{
 
 
 <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-<input type="checkbox" id="hideCusps">
+<input type="checkbox" id="hideCusps" checked>
 Hide Cusps
 </label>
 
@@ -521,9 +581,20 @@ HOUSE START
     </label>
 
     <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-        <input type="checkbox" id="revertASC">
+        <input type="checkbox" id="revertASC" >
         Revert ASC
     </label>
+	
+	<label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
+	<input type="checkbox" id="showLordship" checked>
+	LORDSHIP
+	</label>
+	
+	
+	
+	
+	
+	
 
     <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
         BAV MODE
@@ -543,6 +614,8 @@ HOUSE START
 	
 	
 	
+	
+	
 
 	
 	
@@ -552,7 +625,7 @@ HOUSE START
 
 
 
-	
+	<div id="doubleTransitSummaryMirror" style="margin-top:6px;font-weight:bold;color:#00e5ff;text-align:center;"></div>
 	
 	
 	
@@ -560,18 +633,46 @@ HOUSE START
 
 
 
+
+<div id="dateBar" style="
+width:850px;
+margin:10px auto 20px auto;
+background:#020617;
+border-top:3px solid #ffcc00;
+border-bottom:3px solid #ffcc00;
+color:#00e5ff;
+font-weight:bold;
+font-size:16px;
+padding:8px;
+text-align:center;
+">
+<span id="birthDateText" style="color:#ffcc00;">Birth Date : --</span>
+<span style="display:inline-block;width:120px;"></span>
+<span id="transitDateText" style="color:#00e5ff;">Transit Date : --</span>
+</div>
 
 
 <div id="chart" class="kundali"></div>
 
 
-<div id="savTable" style="width:850px;margin:40px auto 0 auto;"></div>
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">
+Sarvashtakavarga
+</h2>
+
+<div class="collapse-body">
+<div id="savTable" style="width:850px;margin:20px auto 0 auto;"></div>
+</div>
 
 
 
 
 
-<div style="width:850px;margin:40px auto 0 auto;text-align:center;">
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">
+BINNA ASHTAKAVARGA
+</h2>
+
+<div class="collapse-body">
+<div style="width:850px;margin:20px auto 0 auto;text-align:center;">
     <label style="font-weight:bold;">
         BINNA ASHTAKAVARGA
         <select id="bavSelect">
@@ -594,29 +695,47 @@ HOUSE START
 
 <div id="bavTable" style="width:850px;margin:10px auto 0 auto;"></div>
 
+</div>
 
 
 
 
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">
+Transit → Natal Planet Aspects
+</h2>
 
-<h2 style="margin-top:40px;text-align:center;">Transit → Natal Planet Aspects</h2>
+<div class="collapse-body">
 
 <div style="margin:8px 0 6px;text-align:center">
 Base Transit Planet :
 <select id="planetAspectPivot"></select>
 </div>
 
-<table id="planetAspectTable" style="width:100%;margin:0 auto;">
+<div style="width:100%;max-width:1400px;margin:0 auto;">
+<table id="planetAspectTable">
 <thead>
 <tr>
 <th>Transit Planet</th>
 </tr>
 </thead>
-<tbody></tbody>
+<tbody>
+<tr>
+<td colspan="13" style="padding:20px;font-weight:bold;color:#ffcc00;">
+Load Natal + Transit JSON to generate table
+</td>
+</tr>
+</tbody>
 </table>
+</div>
 
 
-<h2 style="margin-top:40px;text-align:center;">Transit → Natal Cusp Aspects</h2>
+</div>
+
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">
+Transit → Natal Cusp Aspects
+</h2>
+
+<div class="collapse-body">
 
 <table id="cuspAspectTable" style="width:100%;margin:0 auto;">
 <thead>
@@ -624,9 +743,49 @@ Base Transit Planet :
 <th>Transit Planet</th>
 </tr>
 </thead>
-<tbody></tbody>
+<tbody>
+<tr>
+<td colspan="13" style="padding:20px;font-weight:bold;color:#ffcc00;">
+Load Natal + Transit JSON to generate table
+</td>
+</tr>
+</tbody>
 </table>
 
+</div>
+
+
+
+
+<h2 style="margin-top:40px;text-align:center;">Double Transit Verification (Saturn + Jupiter)</h2>
+
+
+<div style="text-align:center;margin:10px 0;font-weight:bold;">
+<label style="display:inline-flex;align-items:center;gap:6px;">
+<input type="checkbox" id="sign2sign" checked>
+Sign2Sign
+</label>
+</div>
+
+
+<div id="doubleTransitSummary" style="text-align:center;font-weight:bold;margin:10px 0;color:#00e5ff;"></div>
+
+<div id="doubleTransitContainer" style="width:100%;max-width:1400px;margin:20px auto 0 auto;">
+<table id="doubleTransitTable">
+<thead>
+<tr>
+<th>Transit</th>
+<th>Lord of Natal</th>
+<th>House</th>
+<th>Posited In</th>
+<th>Aspect House</th>
+<th>Conj With Lord</th>
+<th>Aspect Lord</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
 
 
 
@@ -647,6 +806,8 @@ document.addEventListener("change",e=>{
         e.target.id==="hideRaKeTransit" ||
         e.target.id==="includeRahuSAV" ||
         e.target.id==="revertASC" ||
+        e.target.id==="showLordship" ||
+        e.target.id==="sign2sign" ||
         e.target.id==="savMode" ||
         e.target.id==="pivotSelect" ||
         e.target.id==="houseStart" ||
@@ -659,8 +820,96 @@ document.addEventListener("change",e=>{
 
 
 
-
 const planets = ["Saturn","Jupiter","Rahu","Ketu","Mangala","Venus","Budha","Surya","Chandra"];
+
+
+
+const SIGN_LORDS = [
+"Mangala",
+"Venus",
+"Budha",
+"Chandra",
+"Surya",
+"Budha",
+"Venus",
+"Mangala",
+"Jupiter",
+"Saturn",
+"Saturn",
+"Jupiter"
+];
+
+
+
+
+
+
+
+
+
+
+
+function getPlanetLordships(nData){
+
+const lords={};
+
+Object.keys(nData.planets).forEach(p=>{
+    lords[p]=[];
+});
+
+/* ===============================
+   ASC SIGN (WITH REVERT LOGIC)
+   =============================== */
+
+let ascDeg = nData.lagna;
+let ascSign = Math.floor(ascDeg/30);
+
+const revertASC = document.getElementById("revertASC")?.checked;
+
+if((ascDeg % 30) >= 15 && !revertASC){
+    ascSign = (ascSign + 1) % 12;
+}
+
+/* ===============================
+   NORMAL PLANET LORDSHIPS
+   =============================== */
+
+for(let h=1; h<=12; h++){
+
+    const sign = (ascSign + h - 1) % 12;
+    const lord = SIGN_LORDS[sign];
+
+    if(lords[lord]){
+        lords[lord].push(h);
+    }
+}
+
+/* ===============================
+   RAHU & KETU DISPOSITOR LORDSHIP
+   =============================== */
+
+["Rahu","Ketu"].forEach(node=>{
+
+    const deg = nData.planets[node];
+    const sign = Math.floor(deg/30);
+    const dispositor = SIGN_LORDS[sign];
+
+    if(lords[dispositor]){
+        lords[node] = [...lords[dispositor]];
+    }
+
+});
+
+return lords;
+
+}
+
+
+
+
+
+
+
 
 
 
@@ -688,7 +937,8 @@ planetAspectPivot.value="Saturn";
 
 planetAspectPivot.onchange=()=>{
     buildTransitPlanetAspectTable();
-    buildTransitCuspAspectTable();
+	buildTransitCuspAspectTable();
+	buildDoubleTransitTable();
 };
 
 
@@ -956,6 +1206,62 @@ const nData = natal.ayanamshas["Lahiri"];
 const tData = transit ? transit.ayanamshas["Lahiri"] : null;
 
 
+/* ===============================
+   UPDATE DATE BAR
+   =============================== */
+
+let birthText="Birth Date : --";
+let transitText="Transit Date : --";
+
+if(natal && natal.meta && natal.meta.datetime_utc){
+
+    const dt=new Date(natal.meta.datetime_utc);
+dt.setMinutes(dt.getMinutes()+330); // convert UTC → IST
+
+    const d=String(dt.getUTCDate()).padStart(2,"0");
+    const monthNames=[
+"January","February","March","April","May","June",
+"July","August","September","October","November","December"
+];
+
+const m=monthNames[dt.getUTCMonth()];
+
+    const y=dt.getUTCFullYear();
+
+    const hh=String(dt.getUTCHours()).padStart(2,"0");
+    const mm=String(dt.getUTCMinutes()).padStart(2,"0");
+    const ss=String(dt.getUTCSeconds()).padStart(2,"0");
+
+    birthText=`Birth Date : ${d} ${m} ${y}  ${hh}:${mm}:${ss}`;
+}
+
+if(transit && transit.meta && transit.meta.datetime_utc){
+
+    const dt=new Date(transit.meta.datetime_utc);
+dt.setMinutes(dt.getMinutes()+330); // convert UTC → IST
+
+    const d=String(dt.getUTCDate()).padStart(2,"0");
+
+	const monthNames=[
+	"January","February","March","April","May","June",
+	"July","August","September","October","November","December"
+	];
+
+	const m=monthNames[dt.getUTCMonth()];
+
+	const y=dt.getUTCFullYear();
+
+    const hh=String(dt.getUTCHours()).padStart(2,"0");
+    const mm=String(dt.getUTCMinutes()).padStart(2,"0");
+    const ss=String(dt.getUTCSeconds()).padStart(2,"0");
+
+    transitText=`Transit Date : ${d} ${m} ${y}  ${hh}:${mm}:${ss}`;
+}
+
+document.getElementById("birthDateText").textContent=birthText;
+document.getElementById("transitDateText").textContent=transitText;
+
+
 
 
 
@@ -1033,30 +1339,40 @@ const tData = transit ? transit.ayanamshas["Lahiri"] : null;
 
 
 
-
-
-
-
-
-
-
-
     let chart = Array(12).fill().map(()=>[]);
 
-/* ==========================================================
-   NATAL PLANETS (always shown)
-   ========================================================== */
-planets.forEach(p=>{
-    const deg = nData.planets[p];
-    const s = Math.floor(deg/30);
+	/* ==========================================================
+	   NATAL PLANETS (always shown)
+	   ========================================================== */
+	planets.forEach(p=>{
+		const deg = nData.planets[p];
+		const s = Math.floor(deg/30);
 
-    const isRetro = nData.planets_retro && nData.planets_retro[p];
-    const rMark = isRetro ? " (R)" : "";
+		const isRetro = nData.planets_retro && nData.planets_retro[p];
+		const rMark = isRetro ? " (R)" : "";
 
-    chart[s].push({
-        text:p.substring(0,2)+" "+degToText(deg)+rMark,
-        cls:"p-line"
-    });
+		const showLordship = document.getElementById("showLordship")?.checked;
+		
+		
+		
+		let lordText="";
+
+		if(showLordship){
+			const lordships=getPlanetLordships(nData);
+			const arr=lordships[p];
+			if(arr && arr.length){
+				lordText=" {"+arr.join(",")+"}";
+			}
+		}
+
+		chart[s].push({
+				text:p.substring(0,2)+lordText+" "+degToText(deg)+rMark,
+				cls:"p-line"
+			});
+	
+	
+	
+	
 });
 
 /* ==========================================================
@@ -1135,7 +1451,10 @@ map.forEach((idx, mapIndex)=>{
 			const contentBox = document.createElement("div");
 			contentBox.style.display = "flex";
 			contentBox.style.flexDirection = "column";
-			contentBox.style.alignItems = "flex-start";
+			contentBox.style.alignItems = "center";
+			contentBox.style.justifyContent = "center"; // Added for vertical centering if space allows
+			contentBox.style.width = "100%";
+			contentBox.style.margin = "0 auto"; // Ensures the box itself is centered
 
 
 			// add cusp + ASC
@@ -1260,7 +1579,7 @@ map.forEach((idx, mapIndex)=>{
 
 	const TOTAL_HEIGHT = 650;
 	const MIN_ROW = 95;          // minimum readable row
-	const EXTRA_GAP = 18;        // 1 empty breathing line
+	const EXTRA_GAP = 30;        // guaranteed bottom breathing space
 	const HEADER_SPACE = 36;     // top header padding in house
 	const LINE_HEIGHT = 22;      // approx height per text line
 
@@ -1331,11 +1650,14 @@ map.forEach((idx, mapIndex)=>{
 	k.style.gridTemplateRows =
 		required.map(h=>h+"px").join(" ");
 		
-	renderSAVTable(nData);
+	renderSAVTable(nData, natal, transit);
     renderBAVTable(nData);
 	
-	buildTransitPlanetAspectTable();
-	buildTransitCuspAspectTable();
+	if(transit){
+    buildTransitPlanetAspectTable();
+    buildTransitCuspAspectTable();
+    buildDoubleTransitTable();
+}
 
 
 
@@ -1358,7 +1680,7 @@ map.forEach((idx, mapIndex)=>{
 
 
 
-function renderSAVTable(nData){
+function renderSAVTable(nData, natalData, transitData){
     const container = document.getElementById("savTable");
     container.innerHTML = "";
     if(!nData) return;
@@ -1607,6 +1929,17 @@ function renderSAVTable(nData){
 
     trRahu.appendChild(td(rTot,true));
     table.appendChild(trRahu);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
     container.appendChild(table);
 }
@@ -1915,6 +2248,7 @@ head.innerHTML="<th>Transit</th>"+ordered.map(p=>{
 }).join("");
 
 table.innerHTML="";
+const doubleTransitHouses = [];
 
 ordered.forEach(p1=>{
 
@@ -2005,11 +2339,236 @@ ordered.forEach(p=>{
 
 
 
+function buildDoubleTransitTable(){
 
+if(!natal || !transit) return;
+
+const nData = natal.ayanamshas["Lahiri"];
+const tData = transit.ayanamshas["Lahiri"];
+
+const table = document.querySelector("#doubleTransitTable tbody");
+table.innerHTML="";
+
+const doubleTransitHouses = [];
+
+
+const saturnDeg = tData.planets["Saturn"];
+const jupiterDeg = tData.planets["Jupiter"];
+
+
+const saturnHouse = getHouseOfDeg(saturnDeg);
+const jupiterHouse = getHouseOfDeg(jupiterDeg);
+
+const saturnAspects = [3,7,10].map(a=>((saturnHouse + a - 2) % 12) + 1);
+const jupiterAspects = [5,7,9].map(a=>((jupiterHouse + a - 2) % 12) + 1);
+
+
+
+function getHouseOfDeg(deg){
+
+const sign2sign = document.getElementById("sign2sign")?.checked;
+
+
+
+
+if(sign2sign){
+
+const revertASC = document.getElementById("revertASC")?.checked;
+
+let ascDeg = nData.lagna;
+let ascSign = Math.floor(ascDeg/30);
+
+let signShift = 0;
+
+if((ascDeg % 30) >= 15 && !revertASC){
+    signShift = 1;
+}
+
+ascSign = (ascSign + signShift) % 12;
+
+const sign = Math.floor(deg/30);
+
+return ((sign - ascSign + 12) % 12) + 1;
+
+}
+
+
+
+
+for(let i=1;i<=12;i++){
+let start = nData.cusps[i];
+let end = nData.cusps[i==12?1:i+1];
+if(end < start) end += 360;
+let d = deg;
+if(d < start) d += 360;
+if(d>=start && d<end) return i;
+}
+
+
+
+
+return null;
+}
+
+
+
+
+
+
+
+function checkAspect(planetHouse,targetHouse,planet){
+
+let diff = (targetHouse - planetHouse + 12) % 12;
+
+/* Saturn KP aspects */
+if(planet==="Saturn"){
+if(diff===2 || diff===6 || diff===9) return true;
+}
+
+/* Jupiter KP aspects */
+if(planet==="Jupiter"){
+if(diff===4 || diff===6 || diff===8) return true;
+}
+
+return false;
+
+}
+
+
+
+
+
+
+for(let h=1;h<=12;h++){
+
+
+
+
+/* =========================================
+   APPLY SAME LAGNA SHIFT LOGIC AS CHART
+   ========================================= */
+
+const pivot = document.getElementById("pivotSelect")?.value || "ASC";
+const revertASC = document.getElementById("revertASC")?.checked;
+
+let pivotDeg = nData.lagna;
+
+if(pivot==="ASC"){
+    pivotDeg = nData.lagna;
+}
+else if(pivot.startsWith("C")){
+    const cNum = parseInt(pivot.substring(1));
+    pivotDeg = nData.cusps[cNum];
+}
+else if(nData.planets[pivot]!==undefined){
+    pivotDeg = nData.planets[pivot];
+}
+
+let signOffset = 0;
+
+if((pivotDeg % 30) >= 15 && !revertASC){
+    signOffset = 1;
+}
+
+
+
+
+
+
+let cuspDeg = nData.cusps[h];
+let sign = (Math.floor(cuspDeg/30) + signOffset) % 12;
+let lord = SIGN_LORDS[sign];
+let lordDeg = nData.planets[lord];
+let lordHouse = getHouseOfDeg(lordDeg);
+
+let saturnHouse = getHouseOfDeg(saturnDeg);
+let jupiterHouse = getHouseOfDeg(jupiterDeg);
+
+let saturnPos = saturnHouse===h;
+let jupiterPos = jupiterHouse===h;
+
+let saturnAsp = checkAspect(saturnHouse,h,"Saturn");
+let jupiterAsp = checkAspect(jupiterHouse,h,"Jupiter");
+
+let saturnConj = absDiff(saturnDeg,lordDeg)<=8;
+let jupiterConj = absDiff(jupiterDeg,lordDeg)<=8;
+
+let saturnAspLord = checkAspect(saturnHouse,getHouseOfDeg(lordDeg),"Saturn");
+let jupiterAspLord = checkAspect(jupiterHouse,getHouseOfDeg(lordDeg),"Jupiter");
+
+let saturnInfluence = saturnPos || saturnAsp || saturnConj || saturnAspLord;
+let jupiterInfluence = jupiterPos || jupiterAsp || jupiterConj || jupiterAspLord;
+
+if(saturnInfluence && jupiterInfluence){
+    doubleTransitHouses.push(h);
+}
+
+function yes(v){ return v ? "YES" : ""; }
+
+const tr1 = document.createElement("tr");
+tr1.innerHTML = `
+<td>Saturn -${saturnHouse}- ${saturnAspects.join(",")}</td>
+<td>${lord} - ${lordHouse}</td>
+<td>${h}</td>
+<td>${yes(saturnPos)}</td>
+<td>${yes(saturnAsp)}</td>
+<td>${yes(saturnConj)}</td>
+<td>${yes(saturnAspLord)}</td>
+`;
+table.appendChild(tr1);
+
+const tr2 = document.createElement("tr");
+tr2.innerHTML = `
+<td>Jupiter -${jupiterHouse}- ${jupiterAspects.join(",")}</td>
+<td>${lord} - ${lordHouse}</td>
+<td>${h}</td>
+<td>${yes(jupiterPos)}</td>
+<td>${yes(jupiterAsp)}</td>
+<td>${yes(jupiterConj)}</td>
+<td>${yes(jupiterAspLord)}</td>
+`;
+table.appendChild(tr2);
+
+const tr3 = document.createElement("tr");
+tr3.innerHTML = `
+<td colspan="7" style="border-top:3px double #ffcc00;"></td>
+`;
+table.appendChild(tr3);
+
+}
+
+
+const summary = document.getElementById("doubleTransitSummary");
+const summaryMirror = document.getElementById("doubleTransitSummaryMirror");
+
+const text =
+"Double Transit Applied Successfully on : " +
+(doubleTransitHouses.length ? doubleTransitHouses.join("-") : "None");
+
+summary.innerHTML = text;
+if(summaryMirror) summaryMirror.innerHTML = text;
+
+}
 
 
 render();
 
+
+document.querySelectorAll(".collapsible").forEach(head=>{
+    head.onclick=()=>{
+        head.classList.toggle("active");
+        const body=head.nextElementSibling;
+        if(body.style.display==="block"){
+            body.style.display="none";
+        }else{
+            body.style.display="block";
+        }
+    };
+});
+
+if(natal && transit){
+    buildDoubleTransitTable();
+}
 
 
 
