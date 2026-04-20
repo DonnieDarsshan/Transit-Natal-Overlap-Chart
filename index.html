@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Transit Mixer</title>
+
+
+
 <style>
 :root{
     --bg-gradient: linear-gradient(135deg,#1a001a,#2b0000);
@@ -10,6 +13,16 @@
     --text-white:#ffffff;
     --asc-yellow:#ffcc00;
     --transit:#00e5ff;
+    
+    /* Cloud Fetcher Vars */
+    --card-bg: rgba(30, 41, 59, 0.85); 
+    --card-border: #334155;
+    --accent-primary: #38bdf8;
+    --accent-secondary: #fcd34d;
+    --text-main: #f8fafc; 
+    --text-muted: #94a3b8;
+    --success: #10b981;
+    --danger: #ef4444;
 }
 body{
     background:var(--bg-gradient);
@@ -19,18 +32,33 @@ body{
     padding:20px;
 }
 
-
+/* ==========================================
+     CSS: CLOUD FETCHER (NATIVE THEME)
+=========================================== */
+.theme-box { width: 100%; background: #000; border: 2px solid var(--grid-line); padding: 15px; box-sizing: border-box; }
+.theme-box.transit { border-color: var(--transit); }
+.theme-title { font-weight: bold; font-size: 16px; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+.theme-title.natal { color: var(--grid-line); }
+.theme-title.transit { color: var(--transit); }
+.theme-row { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-end; margin-bottom: 15px; }
+.theme-group { display: flex; flex-direction: column; gap: 8px; }
+.theme-label { font-size: 11px; color: #aaa; font-weight: bold; text-transform: uppercase; }
+.theme-input { background: #111; color: #fff; border: 1px solid #555; padding: 4px 6px; font-weight: bold; font-size: 14px; text-align: center; }
+.theme-input:focus { border-color: var(--grid-line); outline: none; }
+.transit .theme-input:focus { border-color: var(--transit); }
+.theme-btn { background: #111; color: #fff; border: 1px solid #555; padding: 4px 10px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+.theme-btn:hover { background: #333; border-color: #fff; }
+.theme-btn.fetch-n { background: #2b0000; color: var(--grid-line); border-color: var(--grid-line); }
+.theme-btn.fetch-n:hover { background: var(--grid-line); color: #000; }
+.theme-btn.fetch-t { background: #002b3d; color: var(--transit); border-color: var(--transit); }
+.theme-btn.fetch-t:hover { background: var(--transit); color: #000; }
 
 .controls{
     display:flex;
     gap:15px;
     justify-content:center;
-    margin-bottom:60px; /* increase space above kundali */
+    margin-bottom:60px;
 }
-
-
-
-
 
 button{
     padding:10px 20px;
@@ -41,87 +69,37 @@ button{
     cursor:pointer;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 .kundali {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-
-    /* FIX: force perfectly equal rows even with spanning center box */
     grid-template-rows: repeat(4, calc(650px / 4));
-
     width: 850px;
     height: 650px;
     min-height: 650px;
-
-
     margin: 0 auto;
-
-    /* GRID LINES */
     gap: 2px;
     background: var(--grid-line);
-
-    /* FIX: Use a solid border instead of box-shadow for the outer frame */
     border: 2px solid var(--grid-line);
-    
-    /* Ensure padding and border are included in the 650px width */
     box-sizing: border-box;
-    
-    /* Prevents sub-pixel rendering issues from hiding the right edge */
     overflow: hidden; 
 }
-
-
-
-
-
-
-
-
-
 
 .house{
     border:none;
     background:#2b0000;
-
     position:relative;
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
     align-items:center;
-
-    /* Centered Padding */
     padding-top:45px; 
     padding-left:5px;
     padding-right:5px; 
     padding-bottom:10px;
-
     box-sizing:border-box;
-
     overflow:visible;
-    
-    /* Ensure text inside centers itself */
     text-align: center; 
 }
-
-
-
-
-
-
-
-
-
 
 .house-num{
     position:absolute;
@@ -146,18 +124,11 @@ button{
     border-radius:6px;
 }
 
-
-
-
-
-
-
-
 .cusp-line{
     font-size:13px;
     color:#ffcc00;
     margin-bottom:4px;
-    white-space:nowrap;     /* PREVENT LINE BREAK */
+    white-space:nowrap;
 }
 
 .p-line{
@@ -168,17 +139,6 @@ button{
     text-align:center;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 .asc-line{
     color:var(--asc-yellow);
     font-weight:bold;
@@ -187,14 +147,10 @@ button{
     color:var(--transit);
 }
 
-
-
-/* Dark theme for dropdowns */
 #pivotSelect,
 #houseStart,
 #savMode,
 #bavSelect{
-
     background:#000;
     color:var(--text-white);
     border:1px solid var(--grid-line);
@@ -209,12 +165,6 @@ button{
     color:var(--text-white);
 }
 
-
-
-
-
-
-
 .center-box{
     grid-column:2/4;
     grid-row:2/4;
@@ -227,38 +177,10 @@ button{
     font-weight:bold;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* =========================================
-   CLEAN ASTRO TABLE STYLE
-   ========================================= */
-
 table{
     background:#020617;
     border-collapse:collapse;
+    margin: 0 auto;
 }
 
 table td, table th{
@@ -267,29 +189,11 @@ table td, table th{
     text-align:center;
 }
 
-/* =========================================
-   PLANET ASPECT TABLE COLORS
-   ========================================= */
-
-/* default cell color */
 #planetAspectTable td,
 #cuspAspectTable td{
     color:#ffffff;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* FIRST ROW (planet headers) */
 #planetAspectTable thead th,
 #cuspAspectTable thead th{
     background:#0e006b;
@@ -297,7 +201,6 @@ table td, table th{
     font-weight:bold;
 }
 
-/* FIRST COLUMN (planet labels) */
 #planetAspectTable tbody td:first-child,
 #cuspAspectTable tbody td:first-child{
     background:#0e006b;
@@ -305,43 +208,10 @@ table td, table th{
     font-weight:bold;
 }
 
-
-
-
-
-
-/* =========================================
-   ASPECT COLORS (same as base project)
-   ========================================= */
-
-.aspect-good{
-    color:#22c55e;
-    font-weight:bold;
-}
-
-.aspect-bad{
-    color:#ef4444;
-    font-weight:bold;
-}
-
-.aspect-neutral{
-    color:#f59e0b;
-    font-weight:bold;
-}
-
-.aspect-white{
-    color:#facc15;
-    font-weight:bold;
-}
-
-
-
-
-
-
-
-
-
+.aspect-good{ color:#22c55e; font-weight:bold; }
+.aspect-bad{ color:#ef4444; font-weight:bold; }
+.aspect-neutral{ color:#f59e0b; font-weight:bold; }
+.aspect-white{ color:#facc15; font-weight:bold; }
 
 #planetAspectTable,
 #cuspAspectTable{
@@ -363,26 +233,6 @@ table td, table th{
     line-height:1.2;
 }
 
-
-
-
-
-#planetAspectTable,
-#cuspAspectTable{
-    table-layout:fixed;
-}
-
-#planetAspectTable td,
-#cuspAspectTable td{
-    vertical-align:middle;
-}
-
-
-
-
-
-
-
 #planetAspectPivot{
     background:#000;
     color:#ffffff;
@@ -391,13 +241,7 @@ table td, table th{
     font-weight:bold;
 }
 
-#planetAspectPivot option{
-    background:#000;
-    color:#ffffff;
-}
-
-
-
+#planetAspectPivot option{ background:#000; color:#ffffff; }
 
 #doubleTransitTable{
     width:100%;
@@ -412,30 +256,14 @@ table td, table th{
     font-weight:bold;
 }
 
-#doubleTransitTable td{
-    vertical-align:middle;
-}
-
-
-
 .collapsible{
     cursor:pointer;
     user-select:none;
 }
 
-.collapsible::after{
-    content:" ▼";
-    font-size:14px;
-}
-
-.collapsible.active::after{
-    content:" ▲";
-}
-
-.collapse-body{
-    display:none;
-}
-
+.collapsible::after{ content:" ▼"; font-size:14px; }
+.collapsible.active::after{ content:" ▲"; }
+.collapse-body{ display:none; }
 
 #doubleTransitTable th,
 #doubleTransitTable td{
@@ -447,357 +275,663 @@ table td, table th{
     line-height:1.2;
 }
 
-
-
-
-
-
-
-
-
-
+/* Specific styling for the new Table 3 */
+#pivotCuspalTable table th {
+    background:#0e006b;
+    color:#ffcc00;
+}
+#pivotCuspalTable table td {
+    color: #fff;
+}
 </style>
-
-
-
-
-
-
-
-
-
-
-
 </head>
 <body>
 
-<div class="controls" style="flex-direction:column;gap:10px;align-items:center;">
-    <div style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center;">
-
-    <input type="file" id="natalFile" accept=".json" style="display:none">
-    <button onclick="document.getElementById('natalFile').click()">LOAD NATAL JSON</button>
-
-    <input type="file" id="transitFile" accept=".json" style="display:none">
-    <button onclick="document.getElementById('transitFile').click()">LOAD TRANSIT JSON</button>
-	
-	
-
-
-
-
-<label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-<input type="checkbox" id="hideCusps" checked>
-Hide Cusps
-</label>
-
-<label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-<input type="checkbox" id="hideMinorTransit" checked>
-Hide Minor
-</label>
-
-<label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-<input type="checkbox" id="hideRaKeTransit" checked>
-Hide RaKe
-</label>
-
-
-
-
-
-
-
-
-
-<label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-PIVOT
-<select id="pivotSelect">
-<option value="ASC">ASC</option>
-
-<option value="Surya">Surya</option>
-<option value="Chandra">Chandra</option>
-<option value="Mangala">Mangala</option>
-<option value="Budha">Budha</option>
-<option value="Jupiter">Jupiter</option>
-<option value="Venus">Venus</option>
-<option value="Saturn">Saturn</option>
-<option value="Rahu">Rahu</option>
-<option value="Ketu">Ketu</option>
-
-<option value="C1">Cusp 1</option>
-<option value="C2">Cusp 2</option>
-<option value="C3">Cusp 3</option>
-<option value="C4">Cusp 4</option>
-<option value="C5">Cusp 5</option>
-<option value="C6">Cusp 6</option>
-<option value="C7">Cusp 7</option>
-<option value="C8">Cusp 8</option>
-<option value="C9">Cusp 9</option>
-<option value="C10">Cusp 10</option>
-<option value="C11">Cusp 11</option>
-<option value="C12">Cusp 12</option>
-</select>
-</label>
-
-
-
-
-
-<label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-HOUSE START
-<select id="houseStart">
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
-<option value="6">6</option>
-<option value="7">7</option>
-<option value="8">8</option>
-<option value="9">9</option>
-<option value="10">10</option>
-<option value="11">11</option>
-<option value="12">12</option>
-</select>
-</label>
-
-
-
-
-
-
-
-
-
-
+<div style="display:flex; flex-direction:column; gap:15px; align-items:stretch; margin-bottom: 20px; width: 100%;">
+    <div class="theme-box">
+        <div class="theme-title natal">
+            <span>NATAL CLOUD HOROSCOPE</span>
+            <span style="font-size:12px; color:#aaa;">Profile Name: <input type="text" id="onName" class="theme-input" style="width:150px; text-align:left;"></span>
+        </div>
+        <div class="theme-row">
+            <div class="theme-group">
+                <span class="theme-label">Date (DD-MM-YYYY)</span>
+                <div style="display:flex; gap:4px;">
+                    <input type="text" id="onDay" class="theme-input" style="width:35px;" maxlength="2" onkeydown="arrowSpinner(event,1,31,2)" oninput="smartJump(this,'onMonth','day')">
+                    <input type="text" id="onMonth" class="theme-input" style="width:35px;" maxlength="2" onkeydown="arrowSpinner(event,1,12,2)" oninput="smartJump(this,'onYear','month')">
+                    <input type="text" id="onYear" class="theme-input" style="width:55px;" maxlength="4" onkeydown="arrowSpinner(event,1900,2100,4)" oninput="smartJump(this,'onHour','year')">
+                </div>
+            </div>
+            <div class="theme-group">
+                <span class="theme-label">Time (HH:MM:SS)</span>
+                <div style="display:flex; gap:4px;">
+                    <input type="text" id="onHour" class="theme-input" style="width:35px;" maxlength="2" onkeydown="arrowSpinner(event,0,23,2)" oninput="smartJump(this,'onMin','hour')">
+                    <input type="text" id="onMin" class="theme-input" style="width:35px;" maxlength="2" onkeydown="arrowSpinner(event,0,59,2)" oninput="smartJump(this,'mapSearchQuery','minute')">
+                    <input type="text" id="onSec" class="theme-input" style="width:35px;" maxlength="2" value="00" onkeydown="arrowSpinner(event,0,59,2)">
+                </div>
+            </div>
+            <div class="theme-group">
+                <span class="theme-label">Coordinates (Lat & Lon)</span>
+                <div style="display:flex; gap:4px;">
+                    <input type="text" id="onlineLat" class="theme-input" style="width:75px;" value="13.3190737">
+                    <input type="text" id="onlineLon" class="theme-input" style="width:75px;" value="77.1326306">
+                </div>
+            </div>
+        </div>
+        <div class="theme-row" style="justify-content: space-between; border-top: 1px solid #333; padding-top: 10px;">
+            <div style="display:flex; gap:6px; align-items:center;">
+                <input type="text" id="mapSearchQuery" class="theme-input" style="width:150px; text-align:left;" placeholder="Search Place..." onkeydown="if(event.key === 'Enter') searchOnlineMap()">
+                <button class="theme-btn" onclick="searchOnlineMap()">Search Map</button>
+                <select id="mapSearchResults" class="theme-input" style="display:none; width:150px;" onchange="applyMapSelection()"></select>
+                <span id="detectedTzBadge" style="background: var(--card-border); padding: 4px 8px; font-size: 11px; font-weight: bold; color: var(--accent-secondary); display: none;">Asia/Kolkata</span>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <div id="serverWakeContainer" style="display:none; color:var(--grid-line); font-size:12px; font-weight:bold;">> WAKING...</div>
+                <input type="file" id="loadProfileInput" accept=".json" style="display:none" onchange="loadCloudProfile(event)">
+                <button class="theme-btn" onclick="document.getElementById('loadProfileInput').click()">Load</button>
+                <button class="theme-btn" onclick="saveCloudProfile()">Save</button>
+                <button id="fetchCloudBtn" class="theme-btn fetch-n" onclick="fetchFromCloud()">FETCH NATAL</button>
+            </div>
+        </div>
     </div>
 
+    <div class="theme-box transit">
+        <div class="theme-title transit">
+            <span>TRANSIT HOROSCOPE (AUTO-UPDATES ON ARROW PRESS)</span>
+        </div>
+        <div class="theme-row">
+            <div class="theme-group">
+                <span class="theme-label">Date (DD-MM-YYYY)</span>
+                <div style="display:flex; gap:4px;">
+                    <input type="text" id="trDay" class="theme-input" style="width:35px;" maxlength="2" onkeydown="arrowSpinner(event,1,31,2)" oninput="smartJump(this,'trMonth','day'); scheduleTransitFetch()">
+                    <input type="text" id="trMonth" class="theme-input" style="width:35px;" maxlength="2" onkeydown="arrowSpinner(event,1,12,2)" oninput="smartJump(this,'trYear','month'); scheduleTransitFetch()">
+                    <input type="text" id="trYear" class="theme-input" style="width:55px;" maxlength="4" onkeydown="arrowSpinner(event,1900,2100,4)" oninput="smartJump(this,'trHour','year'); scheduleTransitFetch()">
+                </div>
+            </div>
+            <div class="theme-group">
+                <span class="theme-label">Time (HH:MM:SS)</span>
+                <div style="display:flex; gap:4px;">
+                    <input type="text" id="trHour" class="theme-input" style="width:35px;" maxlength="2" onkeydown="arrowSpinner(event,0,23,2)" oninput="smartJump(this,'trMin','hour'); scheduleTransitFetch()">
+                    <input type="text" id="trMin" class="theme-input" style="width:35px;" maxlength="2" onkeydown="arrowSpinner(event,0,59,2)" oninput="scheduleTransitFetch()">
+                    <input type="text" id="trSec" class="theme-input" style="width:35px;" maxlength="2" value="00" onkeydown="arrowSpinner(event,0,59,2)" oninput="scheduleTransitFetch()">
+                </div>
+            </div>
+            <div class="theme-group">
+                <span class="theme-label">Coordinates (Lat & Lon)</span>
+                <div style="display:flex; gap:4px;">
+                    <input type="text" id="trLat" class="theme-input" style="width:75px;" value="13.3190737" oninput="scheduleTransitFetch()">
+                    <input type="text" id="trLon" class="theme-input" style="width:75px;" value="77.1326306" oninput="scheduleTransitFetch()">
+                </div>
+            </div>
+        </div>
+        <div class="theme-row" style="justify-content: space-between; border-top: 1px solid #333; padding-top: 10px;">
+            <div style="display:flex; gap:6px; align-items:center;">
+                <input type="text" id="trSearchQuery" class="theme-input" style="width:150px; text-align:left;" placeholder="Search Place..." onkeydown="if(event.key === 'Enter') searchTrMap()">
+                <button class="theme-btn" onclick="searchTrMap()">Search Map</button>
+                <select id="trSearchResults" class="theme-input" style="display:none; width:150px;" onchange="applyTrMapSelection()"></select>
+                <span id="trDetectedTzBadge" style="background: var(--card-border); padding: 4px 8px; font-size: 11px; font-weight: bold; color: var(--accent-secondary); display: none;">Asia/Kolkata</span>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <div id="trWakeMessage" style="color:var(--transit); font-size:12px; font-weight:bold; display:none;">> FETCHING...</div>
+                <button class="theme-btn" onclick="setTransitToNow()">Reset to Now</button>
+                <button id="fetchTransitBtn" class="theme-btn fetch-t" onclick="fetchTransitCloud()">FORCE FETCH</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+
+
+
+<div class="controls" style="flex-direction:column;gap:10px;align-items:center;">
+
+
+
+
+
+
+
+
+    <div style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center;">
+        <input type="file" id="natalFile" accept=".json" style="display:none">
+        <button onclick="document.getElementById('natalFile').click()">LOAD NATAL JSON</button>
+
+        <input type="file" id="transitFile" accept=".json" style="display:none">
+        <button onclick="document.getElementById('transitFile').click()">LOAD TRANSIT JSON</button>
+        
+        <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
+            <input type="checkbox" id="hideCusps" checked> Hide Cusps
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
+            <input type="checkbox" id="hideMinorTransit" checked> Hide Minor
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
+            <input type="checkbox" id="hideRaKeTransit" checked> Hide RaKe
+        </label>
+
+        <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
+            PIVOT
+            <select id="pivotSelect">
+                <option value="ASC">ASC</option>
+                <option value="Surya">Surya</option>
+                <option value="Chandra">Chandra</option>
+                <option value="Mangala">Mangala</option>
+                <option value="Budha">Budha</option>
+                <option value="Jupiter">Jupiter</option>
+                <option value="Venus">Venus</option>
+                <option value="Saturn">Saturn</option>
+                <option value="Rahu">Rahu</option>
+                <option value="Ketu">Ketu</option>
+                <option value="C1">Cusp 1</option>
+                <option value="C2">Cusp 2</option>
+                <option value="C3">Cusp 3</option>
+                <option value="C4">Cusp 4</option>
+                <option value="C5">Cusp 5</option>
+                <option value="C6">Cusp 6</option>
+                <option value="C7">Cusp 7</option>
+                <option value="C8">Cusp 8</option>
+                <option value="C9">Cusp 9</option>
+                <option value="C10">Cusp 10</option>
+                <option value="C11">Cusp 11</option>
+                <option value="C12">Cusp 12</option>
+            </select>
+        </label>
+
+        <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
+            HOUSE START
+            <select id="houseStart">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="Surya">Surya</option>
+                <option value="Chandra">Chandra</option>
+                <option value="Mangala">Mangala</option>
+                <option value="Budha">Budha</option>
+                <option value="Jupiter">Jupiter</option>
+                <option value="Venus">Venus</option>
+                <option value="Saturn">Saturn</option>
+                <option value="Rahu">Rahu</option>
+                <option value="Ketu">Ketu</option>
+            </select>
+        </label>
+    </div>
 
     <div style="display:flex;gap:20px;justify-content:center;align-items:center;flex-wrap:wrap;">
-    <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-        <input type="checkbox" id="includeRahuSAV">
-        Rahu SAV
-    </label>
+        <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
+            <input type="checkbox" id="includeRahuSAV"> Rahu SAV
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
+            <input type="checkbox" id="revertASC"> Revert ASC
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
+            <input type="checkbox" id="showLordship" checked> LORDSHIP
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
+            BAV MODE
+            <select id="savMode">
+                <option value="SAV">SAV</option>
+                <option value="Saturn">Saturn</option>
+                <option value="Jupiter">Jupiter</option>
+                <option value="Lagna">Ascendant</option>
+                <option value="Chandra">Chandra</option>
+                <option value="Rahu">Rahu</option>
+                <option value="Budha">Budha</option>
+                <option value="Venus">Venus</option>
+                <option value="Surya">Surya</option>
+                <option value="Mangala">Mangala</option>
+            </select>
+        </label>
+    </div>
 
-    <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-        <input type="checkbox" id="revertASC" >
-        Revert ASC
-    </label>
-	
-	<label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-	<input type="checkbox" id="showLordship" checked>
-	LORDSHIP
-	</label>
-	
-	
-	
-	
-	
-	
-
-    <label style="display:flex;align-items:center;gap:6px;font-weight:bold;">
-        BAV MODE
-        <select id="savMode">
-            <option value="SAV">SAV</option>
-            <option value="Saturn">Saturn</option>
-            <option value="Jupiter">Jupiter</option>
-            <option value="Lagna">Ascendant</option>
-            <option value="Chandra">Chandra</option>
-            <option value="Rahu">Rahu</option>
-            <option value="Budha">Budha</option>
-            <option value="Venus">Venus</option>
-            <option value="Surya">Surya</option>
-            <option value="Mangala">Mangala</option>
-        </select>
-    </label>
-	
-	
-	
-	
-	
-
-	
-	
-	
+    <div id="doubleTransitSummaryMirror" style="margin-top:6px;font-weight:bold;color:#00e5ff;text-align:center;"></div>
 </div>
 
-
-
-
-	<div id="doubleTransitSummaryMirror" style="margin-top:6px;font-weight:bold;color:#00e5ff;text-align:center;"></div>
-	
-	
-	
+<div id="dateBar" style="width:850px; margin:10px auto 20px auto; background:#020617; border-top:3px solid #ffcc00; border-bottom:3px solid #ffcc00; color:#00e5ff; font-weight:bold; font-size:16px; padding:8px; text-align:center;">
+    <span id="birthDateText" style="color:#ffcc00;">Birth Date : --</span>
+    <span style="display:inline-block;width:120px;"></span>
+    <span id="transitDateText" style="color:#00e5ff;">Transit Date : --</span>
 </div>
-
-
-
-
-<div id="dateBar" style="
-width:850px;
-margin:10px auto 20px auto;
-background:#020617;
-border-top:3px solid #ffcc00;
-border-bottom:3px solid #ffcc00;
-color:#00e5ff;
-font-weight:bold;
-font-size:16px;
-padding:8px;
-text-align:center;
-">
-<span id="birthDateText" style="color:#ffcc00;">Birth Date : --</span>
-<span style="display:inline-block;width:120px;"></span>
-<span id="transitDateText" style="color:#00e5ff;">Transit Date : --</span>
-</div>
-
 
 <div id="chart" class="kundali"></div>
 
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">Transit Nakshatra & Rotated Lordships</h2>
+<div class="collapse-body" style="display:block;"> 
+    <div id="nakshatraTablesContainer" style="width:100%; max-width:1200px; margin:0 auto;"></div>
+    
+    <div id="pivotCuspalTable" style="width:100%; max-width:1000px; margin:40px auto 0 auto;"></div>
+</div>
 
-<h2 class="collapsible" style="margin-top:40px;text-align:center;">
-Sarvashtakavarga
-</h2>
+<style>
+.ashta-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; width:900px; }
+.ashta-kundali{ width:260px; height:260px; border:3px solid #ffcc00; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); background:#111; }
+.ashta-cell{ display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:18px; border:1px solid #555; }
+.ashta-center{ grid-column:2/4; grid-row:2/4; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#ffcc00; }
+</style>
 
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">Ashtakavarga Kundalis</h2>
 <div class="collapse-body">
-<div id="savTable" style="width:850px;margin:20px auto 0 auto;"></div>
+    <div id="ashtakavargaContainer" style="width:900px; margin:20px auto; display:flex; flex-direction:column; gap:20px; align-items:center;"></div>
 </div>
 
-
-
-
-
-<h2 class="collapsible" style="margin-top:40px;text-align:center;">
-BINNA ASHTAKAVARGA
-</h2>
-
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">Sarvashtakavarga</h2>
 <div class="collapse-body">
-<div style="width:850px;margin:20px auto 0 auto;text-align:center;">
-    <label style="font-weight:bold;">
-        BINNA ASHTAKAVARGA
-        <select id="bavSelect">
-            <option value="Saturn" selected>Saturn</option>
-            <option value="Jupiter">Jupiter</option>
-            <option value="Mangala">Mangala</option>
-            <option value="Surya">Surya</option>
-            <option value="Venus">Venus</option>
-            <option value="Budha">Budha</option>
-            <option value="Chandra">Chandra</option>
-            <option value="Lagna">Lagna</option>
-            <option value="Rahu">Rahu</option>
-        </select>
-    </label>
+    <div id="savTable" style="width:850px;margin:20px auto 0 auto;"></div>
 </div>
 
-
-
-
-
-<div id="bavTable" style="width:850px;margin:10px auto 0 auto;"></div>
-
-</div>
-
-
-
-
-<h2 class="collapsible" style="margin-top:40px;text-align:center;">
-Transit → Natal Planet Aspects
-</h2>
-
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">BINNA ASHTAKAVARGA</h2>
 <div class="collapse-body">
-
-<div style="margin:8px 0 6px;text-align:center">
-Base Transit Planet :
-<select id="planetAspectPivot"></select>
+    <div style="width:850px;margin:20px auto 0 auto;text-align:center;">
+        <label style="font-weight:bold;">
+            BINNA ASHTAKAVARGA
+            <select id="bavSelect">
+                <option value="Saturn" selected>Saturn</option>
+                <option value="Jupiter">Jupiter</option>
+                <option value="Mangala">Mangala</option>
+                <option value="Surya">Surya</option>
+                <option value="Venus">Venus</option>
+                <option value="Budha">Budha</option>
+                <option value="Chandra">Chandra</option>
+                <option value="Lagna">Lagna</option>
+                <option value="Rahu">Rahu</option>
+            </select>
+        </label>
+    </div>
+    <div id="bavTable" style="width:850px;margin:10px auto 0 auto;"></div>
 </div>
 
-<div style="width:100%;max-width:1400px;margin:0 auto;">
-<table id="planetAspectTable">
-<thead>
-<tr>
-<th>Transit Planet</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="13" style="padding:20px;font-weight:bold;color:#ffcc00;">
-Load Natal + Transit JSON to generate table
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-
-</div>
-
-<h2 class="collapsible" style="margin-top:40px;text-align:center;">
-Transit → Natal Cusp Aspects
-</h2>
-
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">Transit → Natal Planet Aspects</h2>
 <div class="collapse-body">
-
-<table id="cuspAspectTable" style="width:100%;margin:0 auto;">
-<thead>
-<tr>
-<th>Transit Planet</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="13" style="padding:20px;font-weight:bold;color:#ffcc00;">
-Load Natal + Transit JSON to generate table
-</td>
-</tr>
-</tbody>
-</table>
-
+    <div style="margin:8px 0 6px;text-align:center">
+        Base Transit Planet :
+        <select id="planetAspectPivot"></select>
+    </div>
+    <div style="width:100%;max-width:1400px;margin:0 auto;">
+        <table id="planetAspectTable">
+            <thead><tr><th>Transit Planet</th></tr></thead>
+            <tbody><tr><td colspan="13" style="padding:20px;font-weight:bold;color:#ffcc00;">Load Natal + Transit JSON to generate table</td></tr></tbody>
+        </table>
+    </div>
 </div>
 
-
-
-
-<h2 style="margin-top:40px;text-align:center;">Double Transit Verification (Saturn + Jupiter)</h2>
-
-
-<div style="text-align:center;margin:10px 0;font-weight:bold;">
-<label style="display:inline-flex;align-items:center;gap:6px;">
-<input type="checkbox" id="sign2sign" checked>
-Sign2Sign
-</label>
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">Transit → Natal Cusp Aspects</h2>
+<div class="collapse-body">
+    <table id="cuspAspectTable" style="width:100%;margin:0 auto;">
+        <thead><tr><th>Transit Planet</th></tr></thead>
+        <tbody><tr><td colspan="13" style="padding:20px;font-weight:bold;color:#ffcc00;">Load Natal + Transit JSON to generate table</td></tr></tbody>
+    </table>
 </div>
 
-
-<div id="doubleTransitSummary" style="text-align:center;font-weight:bold;margin:10px 0;color:#00e5ff;"></div>
-
-<div id="doubleTransitContainer" style="width:100%;max-width:1400px;margin:20px auto 0 auto;">
-<table id="doubleTransitTable">
-<thead>
-<tr>
-<th>Transit</th>
-<th>Lord of Natal</th>
-<th>House</th>
-<th>Posited In</th>
-<th>Aspect House</th>
-<th>Conj With Lord</th>
-<th>Aspect Lord</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+<h2 class="collapsible" style="margin-top:40px;text-align:center;">Double Transit Verification (Saturn + Jupiter)</h2>
+<div class="collapse-body">
+    <div style="text-align:center;margin:10px 0;font-weight:bold;">
+        <label style="display:inline-flex;align-items:center;gap:6px;">
+            <input type="checkbox" id="sign2sign" checked> Sign2Sign
+        </label>
+    </div>
+    <div id="doubleTransitSummary" style="text-align:center;font-weight:bold;margin:10px 0;color:#00e5ff;"></div>
+    <div id="doubleTransitContainer" style="width:100%;max-width:1400px;margin:20px auto 0 auto;">
+        <table id="doubleTransitTable">
+            <thead>
+                <tr><th>Transit</th><th>Lord of Natal</th><th>House</th><th>Posited In</th><th>Aspect House</th><th>Conj With Lord</th><th>Aspect Lord</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
-
-
-
-
-
-
-
 
 <script>
 let natal = null;
 let transit = null;
 
+
+
+
+
+
+
+
+
+
+
+
+
+// ==========================================
+// CLOUD HOROSCOPE FETCHER LOGIC
+// ==========================================
+let currentMapResults = [];
+let trMapResults = [];
+let transitFetchTimer = null;
+let onTimezoneStr = "Asia/Kolkata";
+let trTimezoneStr = "Asia/Kolkata";
+
+function calculateAccurateOffset(tzString, d, m, y, hr, min) {
+    try {
+        const dateStr = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}T${String(hr).padStart(2,'0')}:${String(min).padStart(2,'0')}:00Z`;
+        const dateObj = new Date(dateStr);
+        const formatter = new Intl.DateTimeFormat('en-US', { timeZone: tzString, timeZoneName: 'longOffset' });
+        const parts = formatter.formatToParts(dateObj);
+        const tzPart = parts.find(p => p.type === 'timeZoneName').value;
+        if (tzPart === 'GMT') return 0;
+        const sign = tzPart.includes('-') ? -1 : 1;
+        const match = tzPart.match(/GMT[+-](\d{1,2})(?::(\d{2}))?/);
+        if(match) {
+            const hrs = parseInt(match[1] || 0);
+            const mins = parseInt(match[2] || 0);
+            return sign * ((hrs * 60) + mins);
+        }
+        return 330;
+    } catch(e) { return 330; }
+}
+
+// Populate Transit with current date/time on load
+window.addEventListener('DOMContentLoaded', () => {
+    setTransitToNow();
+});
+
+function setTransitToNow() {
+    const now = new Date();
+    document.getElementById("trDay").value = String(now.getDate()).padStart(2, '0');
+    document.getElementById("trMonth").value = String(now.getMonth() + 1).padStart(2, '0');
+    document.getElementById("trYear").value = now.getFullYear();
+    document.getElementById("trHour").value = String(now.getHours()).padStart(2, '0');
+    document.getElementById("trMin").value = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById("trSec").value = String(now.getSeconds()).padStart(2, '0');
+    fetchTransitCloud(); // Auto-fetch once populated
+}
+
+function scheduleTransitFetch() {
+    clearTimeout(transitFetchTimer);
+    document.getElementById("trWakeMessage").style.display = "block";
+    transitFetchTimer = setTimeout(fetchTransitCloud, 1000); 
+}
+
+function arrowSpinner(e, min, max, padding) {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        e.preventDefault();
+        let val = parseInt(e.target.value);
+        if (isNaN(val)) { val = (max > 2000) ? new Date().getFullYear() : min; }
+        if (e.key === "ArrowUp") val++;
+        if (e.key === "ArrowDown") val--;
+        if (val > max) val = min;
+        if (val < min) val = max;
+        e.target.value = String(val).padStart(padding, '0');
+        
+        if(e.target.id.startsWith("tr")) scheduleTransitFetch();
+    }
+}
+
+function smartJump(currentElement, nextElementId, type) {
+    let val = currentElement.value.replace(/\D/g, '');
+    currentElement.value = val;
+    if (val.length === 0) return;
+    
+    let shouldJump = false;
+    if (type === 'year' && val.length >= 4) shouldJump = true;
+    else if (type !== 'year') {
+        if (val.length >= 2) shouldJump = true;
+        else if (val.length === 1) {
+            let num = parseInt(val);
+            if (type === 'day' && num >= 4) shouldJump = true;
+            if (type === 'month' && num >= 2) shouldJump = true;
+            if (type === 'hour' && num >= 3) shouldJump = true;
+            if (type === 'minute' && num >= 6) shouldJump = true;
+        }
+    }
+    if (shouldJump) {
+        if (type !== 'year' && val.length === 1) currentElement.value = "0" + val;
+        document.getElementById(nextElementId).focus();
+    }
+}
+
+async function searchMapCore(queryId, dropdownId, resultsArray, btnElement) {
+    const query = document.getElementById(queryId).value.trim();
+    if (!query) return;
+    const origText = btnElement.innerHTML;
+    btnElement.innerHTML = "...";
+    try {
+        const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=10`);
+        const data = await res.json();
+        const drop = document.getElementById(dropdownId);
+        drop.innerHTML = "";
+        if (data && data.results && data.results.length > 0) {
+            resultsArray.splice(0, resultsArray.length, ...data.results);
+            const def = document.createElement("option"); def.text = `-- Select Place --`; def.value = ""; drop.appendChild(def);
+            data.results.forEach((p, i) => {
+                const opt = document.createElement("option");
+                let dName = `${p.name}`;
+                if(p.admin1) dName += `, ${p.admin1}`;
+                if(p.country) dName += `, ${p.country}`;
+                opt.text = dName.length > 40 ? dName.substring(0, 37) + "..." : dName;
+                opt.value = i; drop.appendChild(opt);
+            });
+            drop.style.display = "block";
+        } else {
+            drop.style.display = "none"; alert("Place not found.");
+        }
+    } catch (e) { alert("Map error."); } finally { btnElement.innerHTML = origText; }
+}
+
+function searchOnlineMap() { searchMapCore("mapSearchQuery", "mapSearchResults", currentMapResults, event.target); }
+function searchTrMap() { searchMapCore("trSearchQuery", "trSearchResults", trMapResults, event.target); }
+
+function applyMapSelection() {
+    const idx = document.getElementById("mapSearchResults").value;
+    if (idx !== "") {
+        const selected = currentMapResults[idx];
+        document.getElementById("onlineLat").value = parseFloat(selected.latitude).toFixed(6);
+        document.getElementById("onlineLon").value = parseFloat(selected.longitude).toFixed(6);
+        onTimezoneStr = selected.timezone || "UTC";
+        const tzBadge = document.getElementById("detectedTzBadge");
+        if(tzBadge) { tzBadge.innerText = onTimezoneStr; tzBadge.style.display = "inline-block"; }
+    }
+}
+
+function applyTrMapSelection() {
+    const idx = document.getElementById("trSearchResults").value;
+    if (idx !== "") {
+        const selected = trMapResults[idx];
+        document.getElementById("trLat").value = parseFloat(selected.latitude).toFixed(6);
+        document.getElementById("trLon").value = parseFloat(selected.longitude).toFixed(6);
+        trTimezoneStr = selected.timezone || "UTC";
+        const tzBadge = document.getElementById("trDetectedTzBadge");
+        if(tzBadge) { tzBadge.innerText = trTimezoneStr; tzBadge.style.display = "inline-block"; }
+        scheduleTransitFetch();
+    }
+}
+
+function saveCloudProfile() {
+    const name = document.getElementById("onName").value.trim() || "Profile";
+    const profileData = {
+        type: "CloudHoroscopeProfile", name: name,
+        date: { d: document.getElementById("onDay").value, m: document.getElementById("onMonth").value, y: document.getElementById("onYear").value },
+        time: { h: document.getElementById("onHour").value, min: document.getElementById("onMin").value, sec: document.getElementById("onSec").value },
+        coords: { lat: document.getElementById("onlineLat").value, lon: document.getElementById("onlineLon").value },
+        timezoneStr: typeof onTimezoneStr !== 'undefined' ? onTimezoneStr : "Asia/Kolkata"
+    };
+    const blob = new Blob([JSON.stringify(profileData, null, 2)], { type: "application/json" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = `${name.replace(/[^a-z0-9]/gi, '_').toUpperCase()}.json`;
+    a.click();
+}
+
+function loadCloudProfile(event) {
+    const file = event.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const data = JSON.parse(e.target.result);
+            if (data.type !== "CloudHoroscopeProfile") { alert("Invalid file."); return; }
+            document.getElementById("onName").value = data.name || "";
+            if (data.date) { document.getElementById("onDay").value = data.date.d; document.getElementById("onMonth").value = data.date.m; document.getElementById("onYear").value = data.date.y; }
+            if (data.time) { document.getElementById("onHour").value = data.time.h; document.getElementById("onMin").value = data.time.min; document.getElementById("onSec").value = data.time.sec; }
+            if (data.coords){ document.getElementById("onlineLat").value = data.coords.lat; document.getElementById("onlineLon").value = data.coords.lon; }
+            
+            if (data.timezoneStr && typeof onTimezoneStr !== 'undefined') {
+                onTimezoneStr = data.timezoneStr;
+                const tzBadge = document.getElementById("detectedTzBadge");
+                if (tzBadge) {
+                    tzBadge.innerText = onTimezoneStr;
+                    tzBadge.style.display = "inline-block";
+                }
+            }
+            
+            // AUTO-FETCH IMMEDIATELY UPON LOAD
+            setTimeout(fetchFromCloud, 200);
+        } catch (err) { alert("File error."); }
+    };
+    reader.readAsText(file); event.target.value = '';
+}
+
+async function fetchFromCloud() {
+    const d = document.getElementById("onDay").value; const m = document.getElementById("onMonth").value; const y = document.getElementById("onYear").value;
+    const hr = document.getElementById("onHour").value; const min = document.getElementById("onMin").value; const sec = document.getElementById("onSec").value || "00";
+    const lat = document.getElementById("onlineLat").value; const lon = document.getElementById("onlineLon").value;
+    
+    if (!d || !m || !y || !hr || !min || !lat || !lon) { alert("Fill all Natal fields."); return; }
+
+    const calculatedOffset = calculateAccurateOffset(onTimezoneStr, d, m, y, hr, min);
+    const reqData = { year: parseInt(y), month: parseInt(m), day: parseInt(d), hour: parseInt(hr), minute: parseInt(min), second: parseInt(sec), lat: parseFloat(lat), lon: parseFloat(lon), timezone_offset: calculatedOffset, horary_mode: false };
+    
+    const btn = document.getElementById("fetchCloudBtn"); const orig = btn.innerHTML;
+    btn.innerHTML = "Fetching..."; btn.disabled = true; document.getElementById("serverWakeContainer").style.display = "block";
+
+    try {
+        const res = await fetch('https://donnie-astro-engine.onrender.com/calculate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(reqData) });
+        const result = await res.json();
+        
+        if (result.status === "success") {
+            natal = result.data;
+            const name = document.getElementById("onName").value.trim() || "Cloud Natal";
+            const dtStr = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}T${String(hr).padStart(2,'0')}:${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}Z`;
+            natal.meta = { name: name, datetime_utc: dtStr };
+            
+            render();
+            btn.innerHTML = "SUCCESS ✓"; btn.style.background = "var(--success)"; btn.style.color = "#000";
+        } else { alert("Server Error"); }
+    } catch (e) { alert("Network Error"); } 
+    finally {
+        setTimeout(() => { btn.innerHTML = orig; btn.removeAttribute("style"); btn.disabled = false; document.getElementById("serverWakeContainer").style.display="none"; }, 2000);
+    }
+}
+
+async function fetchTransitCloud() {
+    const d = document.getElementById("trDay").value; const m = document.getElementById("trMonth").value; const y = document.getElementById("trYear").value;
+    const hr = document.getElementById("trHour").value; const min = document.getElementById("trMin").value; const sec = document.getElementById("trSec").value || "00";
+    const lat = document.getElementById("trLat").value; const lon = document.getElementById("trLon").value;
+    
+    if (!d || !m || !y || !hr || !min || !lat || !lon) return;
+
+    const calculatedOffset = calculateAccurateOffset(trTimezoneStr, d, m, y, hr, min);
+    const reqData = { year: parseInt(y), month: parseInt(m), day: parseInt(d), hour: parseInt(hr), minute: parseInt(min), second: parseInt(sec), lat: parseFloat(lat), lon: parseFloat(lon), timezone_offset: calculatedOffset, horary_mode: false };
+    
+    const btn = document.getElementById("fetchTransitBtn"); const orig = btn.innerHTML;
+    btn.innerHTML = "..."; btn.disabled = true; document.getElementById("trWakeMessage").style.display = "block";
+
+    try {
+        const res = await fetch('https://donnie-astro-engine.onrender.com/calculate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(reqData) });
+        const result = await res.json();
+        
+        if (result.status === "success") {
+            transit = result.data;
+            const dtStr = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}T${String(hr).padStart(2,'0')}:${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}Z`;
+            transit.meta = { name: "Transit", datetime_utc: dtStr };
+            
+            render();
+            btn.innerHTML = "UPDATED ✓"; btn.style.color = "var(--transit)";
+        }
+    } catch (e) { console.error("Transit network error"); } 
+    finally {
+        setTimeout(() => { btn.innerHTML = orig; btn.removeAttribute("style"); btn.disabled = false; document.getElementById("trWakeMessage").style.display="none"; }, 1500);
+    }
+}
+
+
+
+
+
+
+
+
+// --- NAKSHATRA & TARA DATA ---
+
+
+
+
+
+
+
+function checkRetrograde(p, dataObj, rootObj) {
+    if (!p) return false;
+    
+    const pStr = String(p).trim().toLowerCase();
+    const pAbbr = pStr.substring(0, 2); // Catches "ju" for Jupiter, "ra" for Rahu, etc.
+
+    // 1. HARD OVERRIDE: Rahu and Ketu are shadow nodes. They always move backward.
+    if (pStr === "rahu" || pStr === "ketu") return true;
+
+    // 2. Deep scan function to catch any weird API formatting
+    function scan(obj) {
+        if (!obj || typeof obj !== "object") return false;
+
+        // A. Look for any object or array with "retro" in the name
+        const retroKeys = Object.keys(obj).filter(k => k.toLowerCase().includes("retro"));
+        for (let rk of retroKeys) {
+            const data = obj[rk];
+            
+            if (Array.isArray(data)) {
+                // Check if the array has "Jupiter" or "Ju"
+                if (data.map(x => String(x).trim().toLowerCase()).some(x => x === pStr || x === pAbbr)) return true;
+            } 
+            else if (typeof data === "object" && data !== null) {
+                // Check if the dict has "Jupiter" or "Ju"
+                const matchKey = Object.keys(data).find(k => k.toLowerCase() === pStr || k.toLowerCase() === pAbbr);
+                if (matchKey) {
+                    const val = String(data[matchKey]).trim().toLowerCase();
+                    // Catch booleans, strings, 1s, and "R" labels
+                    if (val === "true" || val === "1" || val === "r") return true;
+                }
+            }
+        }
+
+        // B. Look for "speed" dicts (negative speed = retrograde)
+        const speedKeys = Object.keys(obj).filter(k => k.toLowerCase().includes("speed"));
+        for (let sk of speedKeys) {
+            const data = obj[sk];
+            if (typeof data === "object" && data !== null && !Array.isArray(data)) {
+                const matchKey = Object.keys(data).find(k => k.toLowerCase() === pStr || k.toLowerCase() === pAbbr);
+                if (matchKey) {
+                    if (parseFloat(data[matchKey]) < 0) return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
+    return scan(dataObj) || scan(rootObj);
+}
+
+
+
+
+
+const NAKSHATRAS = ["Ashwini","Bharani","Krittika","Rohini","Mrigashira","Ardra","Punarvasu","Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni","Hasta","Chitra","Swati","Vishakha","Anuradha","Jyeshtha","Moola","Purva Ashadha","Uttara Ashadha","Shravana","Dhanishta","Shatabhisha","Purva Bhadrapada","Uttara Bhadrapada","Revati"];
+const NAK_LORDS = ["Ketu","Venus","Surya","Chandra","Mangala","Rahu","Jupiter","Saturn","Budha"];
+const TARA_NAMES = ["Janma", "Sampath", "Vipath", "Kshema", "Pratyari", "Sadhana", "Nidana", "Mithra", "Ati-Mitra"];
+const ZODIAC_SIGNS = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
+
+// --- VIMSHOTTARI ORDER FOR SORTING ---
+const VIMSHOTTARI_ORDER = ["Surya", "Chandra", "Mangala", "Rahu", "Jupiter", "Saturn", "Budha", "Ketu", "Venus"];
 
 document.addEventListener("change",e=>{
     if(
@@ -815,217 +949,83 @@ document.addEventListener("change",e=>{
     ) render();
 });
 
-
-
-
-
-
 const planets = ["Saturn","Jupiter","Rahu","Ketu","Mangala","Venus","Budha","Surya","Chandra"];
 
-
-
 const SIGN_LORDS = [
-"Mangala",
-"Venus",
-"Budha",
-"Chandra",
-"Surya",
-"Budha",
-"Venus",
-"Mangala",
-"Jupiter",
-"Saturn",
-"Saturn",
-"Jupiter"
+"Mangala","Venus","Budha","Chandra","Surya","Budha",
+"Venus","Mangala","Jupiter","Saturn","Saturn","Jupiter"
 ];
 
-
-
-
-
-
-
-
-
-
-
 function getPlanetLordships(nData){
+    const lords={};
+    Object.keys(nData.planets).forEach(p=>{ lords[p]=[]; });
 
-const lords={};
+    let ascDeg = nData.lagna;
+    let ascSign = Math.floor(ascDeg/30);
+    const revertASC = document.getElementById("revertASC")?.checked;
 
-Object.keys(nData.planets).forEach(p=>{
-    lords[p]=[];
-});
-
-/* ===============================
-   ASC SIGN (WITH REVERT LOGIC)
-   =============================== */
-
-let ascDeg = nData.lagna;
-let ascSign = Math.floor(ascDeg/30);
-
-const revertASC = document.getElementById("revertASC")?.checked;
-
-if((ascDeg % 30) >= 15 && !revertASC){
-    ascSign = (ascSign + 1) % 12;
-}
-
-/* ===============================
-   NORMAL PLANET LORDSHIPS
-   =============================== */
-
-for(let h=1; h<=12; h++){
-
-    const sign = (ascSign + h - 1) % 12;
-    const lord = SIGN_LORDS[sign];
-
-    if(lords[lord]){
-        lords[lord].push(h);
-    }
-}
-
-/* ===============================
-   RAHU & KETU DISPOSITOR LORDSHIP
-   =============================== */
-
-["Rahu","Ketu"].forEach(node=>{
-
-    const deg = nData.planets[node];
-    const sign = Math.floor(deg/30);
-    const dispositor = SIGN_LORDS[sign];
-
-    if(lords[dispositor]){
-        lords[node] = [...lords[dispositor]];
+    if((ascDeg % 30) >= 15 && !revertASC){
+        ascSign = (ascSign + 1) % 12;
     }
 
-});
+    for(let h=1; h<=12; h++){
+        const sign = (ascSign + h - 1) % 12;
+        const lord = SIGN_LORDS[sign];
+        if(lords[lord]){
+            lords[lord].push(h);
+        }
+    }
 
-return lords;
+    ["Rahu","Ketu"].forEach(node=>{
+        const deg = nData.planets[node];
+        const sign = Math.floor(deg/30);
+        const dispositor = SIGN_LORDS[sign];
+        if(lords[dispositor]){
+            lords[node] = [...lords[dispositor]];
+        }
+    });
 
+    return lords;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/* ===============================
-   TRANSIT ASPECT PIVOT DROPDOWN
-   =============================== */
 
 const planetAspectPivot = document.getElementById("planetAspectPivot");
-
 planetAspectPivot.innerHTML="";
-
 planets.forEach(p=>{
     const opt=document.createElement("option");
     opt.value=p;
     opt.textContent=p;
     planetAspectPivot.appendChild(opt);
 });
-
 planetAspectPivot.value="Saturn";
-
-
-
-
 planetAspectPivot.onchange=()=>{
     buildTransitPlanetAspectTable();
-	buildTransitCuspAspectTable();
-	buildDoubleTransitTable();
+    buildTransitCuspAspectTable();
+    buildDoubleTransitTable();
 };
 
-
-
-
-
-
-/* ============================================================
-   PARASHARA BAV RULES - VERIFIED FOR 337 TOTAL POINTS
-   ============================================================ */
 const BAV_RULES = {
-    Surya: { 
-        Surya: [1, 2, 4, 7, 8, 9, 10, 11], Chandra: [3, 6, 10, 11], 
-        Mangala: [1, 2, 4, 7, 8, 9, 10, 11], Budha: [3, 5, 6, 9, 10, 11, 12], 
-        Jupiter: [5, 6, 9, 11], Venus: [6, 7, 12], 
-        Saturn: [1, 2, 4, 7, 8, 9, 10, 11], Lagna: [3, 4, 6, 10, 11, 12] 
-    },
-    Chandra: { 
-			Surya: [3, 6, 7, 8, 10, 11], Chandra: [1, 3, 6, 7, 10, 11], 
-			Mangala: [2, 3, 5, 6, 9, 10, 11], Budha: [1, 3, 4, 5, 7, 8, 10, 11], 
-			Jupiter: [1, 4, 7, 8, 10, 11, 12], Venus: [3, 4, 5, 7, 9, 10, 11], 
-			Saturn: [3, 5, 6, 11], Lagna: [3, 6, 10, 11, 12] 
-    },
-    Mangala: { 
-        Surya: [3, 5, 6, 10, 11], Chandra: [3, 6, 11], 
-        Mangala: [1, 2, 4, 7, 8, 10, 11], Budha: [3, 5, 6, 11], 
-        Jupiter: [6, 10, 11, 12], Venus: [6, 8, 11, 12], 
-        Saturn: [1, 4, 7, 8, 9, 10, 11], Lagna: [1, 3, 6, 10, 11] 
-    },
-    Budha: { 
-        Surya: [5, 6, 9, 11, 12], Chandra: [2, 4, 6, 8, 10, 11], 
-        Mangala: [1, 2, 4, 7, 8, 9, 10, 11], Budha: [1, 3, 5, 6, 9, 10, 11, 12], 
-        Jupiter: [6, 8, 11, 12], Venus: [1, 2, 3, 4, 5, 8, 9, 11], 
-        Saturn: [1, 2, 4, 7, 8, 9, 10, 11], Lagna: [1, 2, 4, 6, 8, 10, 11] 
-    },
-    Jupiter: { 
-        Surya: [1, 2, 3, 4, 7, 8, 9, 10, 11], Chandra: [2, 5, 7, 9, 11], 
-        Mangala: [1, 2, 4, 7, 8, 10, 11], Budha: [1, 2, 4, 5, 6, 9, 10, 11], 
-        Jupiter: [1, 2, 3, 4, 7, 8, 10, 11], Venus: [2, 5, 6, 9, 10, 11], 
-        Saturn: [3, 5, 6, 12], Lagna: [1, 2, 4, 5, 6, 7, 9, 10, 11] 
-    },
-    Venus: { 
-        Surya: [8, 11, 12], Chandra: [1, 2, 3, 4, 5, 8, 9, 11, 12], 
-		Mangala: [3, 5, 6, 9, 11, 12], Budha: [3, 5, 6, 9, 11], 
-		Jupiter: [5, 8, 9, 10, 11], Venus: [1, 2, 3, 4, 5, 8, 9, 10, 11], 
-		Saturn: [3, 4, 5, 8, 9, 10, 11], Lagna: [1, 2, 3, 4, 5, 8, 9] 
-    },
-    Saturn: { 
-        Surya: [1, 2, 4, 7, 8, 10, 11], Chandra: [3, 6, 11], 
-        Mangala: [3, 5, 6, 10, 11, 12], Budha: [6, 8, 9, 10, 11, 12], 
-        Jupiter: [5, 6, 11, 12], Venus: [6, 11, 12], 
-        Saturn: [3, 5, 6, 11], Lagna: [1, 3, 4, 6, 10, 11] 
-    },
-    Rahu: {
-        Surya: [1,2,3,5,7,8,10],
-        Chandra: [1,3,5,7,8,9,10],
-        Mangala: [2,3,5,12],
-        Budha: [2,4,7,8,12],
-        Jupiter: [1,3,4,6,8],
-        Venus: [6,7,11,12],
-        Saturn: [3,5,7,10,11,12],
-        Lagna: [3,4,5,9,12]
-    }
-
-	
-	
-	
+    Surya: { Surya: [1, 2, 4, 7, 8, 9, 10, 11], Chandra: [3, 6, 10, 11], Mangala: [1, 2, 4, 7, 8, 9, 10, 11], Budha: [3, 5, 6, 9, 10, 11, 12], Jupiter: [5, 6, 9, 11], Venus: [6, 7, 12], Saturn: [1, 2, 4, 7, 8, 9, 10, 11], Lagna: [3, 4, 6, 10, 11, 12] },
+    Chandra: { Surya: [3, 6, 7, 8, 10, 11], Chandra: [1, 3, 6, 7, 10, 11], Mangala: [2, 3, 5, 6, 9, 10, 11], Budha: [1, 3, 4, 5, 7, 8, 10, 11], Jupiter: [1, 4, 7, 8, 10, 11, 12], Venus: [3, 4, 5, 7, 9, 10, 11], Saturn: [3, 5, 6, 11], Lagna: [3, 6, 10, 11, 12] },
+    Mangala: { Surya: [3, 5, 6, 10, 11], Chandra: [3, 6, 11], Mangala: [1, 2, 4, 7, 8, 10, 11], Budha: [3, 5, 6, 11], Jupiter: [6, 10, 11, 12], Venus: [6, 8, 11, 12], Saturn: [1, 4, 7, 8, 9, 10, 11], Lagna: [1, 3, 6, 10, 11] },
+    Budha: { Surya: [5, 6, 9, 11, 12], Chandra: [2, 4, 6, 8, 10, 11], Mangala: [1, 2, 4, 7, 8, 9, 10, 11], Budha: [1, 3, 5, 6, 9, 10, 11, 12], Jupiter: [6, 8, 11, 12], Venus: [1, 2, 3, 4, 5, 8, 9, 11], Saturn: [1, 2, 4, 7, 8, 9, 10, 11], Lagna: [1, 2, 4, 6, 8, 10, 11] },
+    Jupiter: { Surya: [1, 2, 3, 4, 7, 8, 9, 10, 11], Chandra: [2, 5, 7, 9, 11], Mangala: [1, 2, 4, 7, 8, 10, 11], Budha: [1, 2, 4, 5, 6, 9, 10, 11], Jupiter: [1, 2, 3, 4, 7, 8, 10, 11], Venus: [2, 5, 6, 9, 10, 11], Saturn: [3, 5, 6, 12], Lagna: [1, 2, 4, 5, 6, 7, 9, 10, 11] },
+    Venus: { Surya: [8, 11, 12], Chandra: [1, 2, 3, 4, 5, 8, 9, 11, 12], Mangala: [3, 5, 6, 9, 11, 12], Budha: [3, 5, 6, 9, 11], Jupiter: [5, 8, 9, 10, 11], Venus: [1, 2, 3, 4, 5, 8, 9, 10, 11], Saturn: [3, 4, 5, 8, 9, 10, 11], Lagna: [1, 2, 3, 4, 5, 8, 9] },
+    Saturn: { Surya: [1, 2, 4, 7, 8, 10, 11], Chandra: [3, 6, 11], Mangala: [3, 5, 6, 10, 11, 12], Budha: [6, 8, 9, 10, 11, 12], Jupiter: [5, 6, 11, 12], Venus: [6, 11, 12], Saturn: [3, 5, 6, 11], Lagna: [1, 3, 4, 6, 10, 11] },
+    Rahu: { Surya: [1,2,3,5,7,8,10], Chandra: [1,3,5,7,8,9,10], Mangala: [2,3,5,12], Budha: [2,4,7,8,12], Jupiter: [1,3,4,6,8], Venus: [6,7,11,12], Saturn: [3,5,7,10,11,12], Lagna: [3,4,5,9,12] }
 };
-
 
 function calcSAV(nData, includeRahu=false) {
-
     const planets7 = ["Surya", "Chandra", "Mangala", "Budha", "Jupiter", "Venus", "Saturn"];
     const posSign = {};
-    
     planets7.forEach(p => posSign[p] = Math.floor(nData.planets[p] / 30));
     posSign["Lagna"] = Math.floor(nData.lagna / 30);
-
     const SAV = Array(12).fill(0);
 
-    // classical 7 planet SAV
     planets7.forEach(targetPlanet => {
         const contributors = [...planets7, "Lagna"];
         contributors.forEach(source => {
             const rules = BAV_RULES[targetPlanet][source];
             const sourceSign = posSign[source];
-
             if (rules) {
                 rules.forEach(houseOffset => {
                     const targetZodiacSign = (sourceSign + (houseOffset - 1)) % 12;
@@ -1035,13 +1035,11 @@ function calcSAV(nData, includeRahu=false) {
         });
     });
 
-    // optional Rahu contribution
     if(includeRahu === true){
         const contributors = [...planets7, "Lagna"];
         contributors.forEach(source => {
             const rules = BAV_RULES["Rahu"][source];
             const sourceSign = posSign[source];
-
             if(rules){
                 rules.forEach(offset=>{
                     const z = (sourceSign + (offset-1)) % 12;
@@ -1050,42 +1048,22 @@ function calcSAV(nData, includeRahu=false) {
             }
         });
     }
-
     return SAV;
 }
 
-	
-	
-	
-	
-	
-	
-	/* ============================================================
-   SINGLE PLANET BINNA ASHTAKAVARGA
-   ============================================================ */
-
 const LAGNA_BAV_RULES_GLOBAL = {
-    Surya:   [3,4,6,10,11,12],
-    Chandra: [3,6,10,11,12],
-    Mangala: [1,3,6,10,11],
-    Budha:   [1,2,4,6,8,10,11],
-    Jupiter: [1,2,4,5,6,7,9,10,11],
-    Venus:   [1,2,3,4,5,8,9],
-    Saturn:  [1,3,4,6,10,11],
-    Lagna:   [3,6,10,11]
+    Surya:   [3,4,6,10,11,12], Chandra: [3,6,10,11,12], Mangala: [1,3,6,10,11],
+    Budha:   [1,2,4,6,8,10,11], Jupiter: [1,2,4,5,6,7,9,10,11], Venus:   [1,2,3,4,5,8,9],
+    Saturn:  [1,3,4,6,10,11], Lagna:   [3,6,10,11]
 };
 
 function calcSingleBAV(nData, target){
-
     const planets7 = ["Surya","Chandra","Mangala","Budha","Jupiter","Venus","Saturn"];
-
     const posSign = {};
     planets7.forEach(p=>posSign[p]=Math.floor(nData.planets[p]/30));
     posSign["Lagna"]=Math.floor(nData.lagna/30);
-
     const row = Array(12).fill(0);
 
-    // Lagna special rules
     if(target==="Lagna"){
         Object.entries(LAGNA_BAV_RULES_GLOBAL).forEach(([source,rules])=>{
             const sSign = posSign[source];
@@ -1097,8 +1075,6 @@ function calcSingleBAV(nData, target){
         });
         return row;
     }
-
-    // Rahu BAV
     if(target==="Rahu"){
         [...planets7,"Lagna"].forEach(source=>{
             const rules = BAV_RULES["Rahu"][source];
@@ -1113,7 +1089,6 @@ function calcSingleBAV(nData, target){
         return row;
     }
 
-    // normal 7 planet BAV
     [...planets7,"Lagna"].forEach(source=>{
         const rules = BAV_RULES[target]?.[source];
         const sSign = posSign[source];
@@ -1124,22 +1099,8 @@ function calcSingleBAV(nData, target){
             });
         }
     });
-
     return row;
 }
-
-	
-	
-	
-
-
-
-
-
-
-
-
-
 
 document.getElementById("natalFile").onchange = e=>{
     const r = new FileReader();
@@ -1165,22 +1126,366 @@ function degToText(d){
     return deg+"°"+min.toString().padStart(2,"0")+"′";
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --- UPDATED FUNCTION: RENDER NAKSHATRA & LORDSHIP TABLES ---
+function renderNakshatraTables(nData, tData) {
+    const container = document.getElementById("nakshatraTablesContainer");
+    if (!container) return;
+    container.innerHTML = "";
+    if (!nData) return;
+
+    const houseStartVal = document.getElementById("houseStart")?.value || "1";
+    const isPlanetStart = ["Surya", "Chandra", "Mangala", "Budha", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"].includes(houseStartVal);
+    
+    // If a planet is selected, the cusps are pre-rotated to it, so we lock the math rotation to 1
+    const houseStart = isPlanetStart ? 1 : parseInt(houseStartVal);
+
+    // 1. Build Internal Cuspal Table Data
+    let cuspsData = [];
+    let activeCusps = []; // Holds the raw degrees for placement calculation
+
+    if (isPlanetStart) {
+        let startDeg = nData.planets[houseStartVal];
+        for(let i=1; i<=12; i++) {
+            let cDeg = (startDeg + (i-1)*30) % 360;
+            activeCusps[i] = cDeg;
+            let signIdx = Math.floor(cDeg / 30);
+            let nakIdx = Math.floor(cDeg / (360/27));
+            
+            cuspsData.push({
+                bhava: i,
+                sign: ZODIAC_SIGNS[signIdx],
+                deg: Math.floor(cDeg % 30),
+                min: Math.floor((cDeg % 1) * 60),
+                sec: Math.floor((((cDeg % 1) * 60) % 1) * 60),
+                signLord: SIGN_LORDS[signIdx],
+                starLord: NAK_LORDS[nakIdx % 9]
+            });
+        }
+    } else {
+        for(let i=1; i<=12; i++) {
+            let cDeg = nData.cusps[i];
+            activeCusps[i] = cDeg;
+            let signIdx = Math.floor(cDeg / 30);
+            let nakIdx = Math.floor(cDeg / (360/27));
+            
+            cuspsData.push({
+                bhava: i,
+                sign: ZODIAC_SIGNS[signIdx],
+                deg: Math.floor(cDeg % 30),
+                min: Math.floor((cDeg % 1) * 60),
+                sec: Math.floor((((cDeg % 1) * 60) % 1) * 60),
+                signLord: SIGN_LORDS[signIdx],
+                starLord: NAK_LORDS[nakIdx % 9]
+            });
+        }
+    }
+
+    // --- CALC BASE PLACEMENTS (Strictly Cusp Based) ---
+    function getBaseHouseOfDeg(deg){
+        for(let i=1;i<=12;i++){
+            let start = activeCusps[i];
+            let end = activeCusps[i===12 ? 1 : i+1];
+            if(end < start) end += 360;
+            let d = deg;
+            if(d < start) d += 360;
+            if(d>=start && d<end) return i;
+        }
+        return 1;
+    }
+
+    // --- CALC BASE LORDSHIPS (Strictly Cusp Based) ---
+    let baseLordships = {};
+    VIMSHOTTARI_ORDER.forEach(p => baseLordships[p] = []);
+    for(let i=1; i<=12; i++) {
+        let signLord = cuspsData[i-1].signLord; // Who rules the sign falling on the cusp
+        if(baseLordships[signLord]) baseLordships[signLord].push(i);
+    }
+
+    // Apply KP Node Agent Logic (Dispositor + Conjunct + Aspected By)
+    ["Rahu", "Ketu"].forEach(node => {
+        let nDeg = nData.planets[node];
+        let nHouse = getBaseHouseOfDeg(nDeg); // Strict KP house placement
+        let nodeLords = new Set();
+        
+        // 1. Dispositor (Sign Lord where Node sits)
+        let signIdx = Math.floor(nDeg / 30);
+        let disp = SIGN_LORDS[signIdx];
+        
+        if (disp && nData.planets[disp] !== undefined) {
+            // Add the house where the dispositor is PLACED
+            let dispDeg = nData.planets[disp];
+            let dispHouse = getBaseHouseOfDeg(dispDeg);
+            nodeLords.add(dispHouse);
+            
+            // Add the houses the dispositor RULES
+            if (baseLordships[disp]) {
+                baseLordships[disp].forEach(h => nodeLords.add(h));
+            }
+        }
+
+        // 2. Planets Conjoining or Aspecting the Node (Judged by KP Houses)
+        const allPlanets = ["Saturn", "Jupiter", "Mangala", "Venus", "Budha", "Surya", "Chandra"];
+        allPlanets.forEach(p => {
+            let pDeg = nData.planets[p];
+            let pHouse = getBaseHouseOfDeg(pDeg); // Strict KP house placement
+            
+            let isConjunct = (pHouse === nHouse);
+            let isAspecting = false;
+            
+            // Calculate distance strictly in terms of KP Houses
+            let houseDistance = (nHouse - pHouse + 12) % 12 + 1;
+
+            if (houseDistance === 7) isAspecting = true; // All planets aspect 7th house from themselves
+            if (p === "Jupiter" && (houseDistance === 5 || houseDistance === 9)) isAspecting = true;
+            if (p === "Saturn" && (houseDistance === 3 || houseDistance === 10)) isAspecting = true;
+            if ((p === "Mangala" || p === "Mars") && (houseDistance === 4 || houseDistance === 8)) isAspecting = true;
+
+            // If conjoined or aspecting, the node inherits their full script
+            if (isConjunct || isAspecting) {
+                // Add the placed house of the conjoined/aspecting planet
+                nodeLords.add(pHouse);
+                
+                // Add the ruled houses of the conjoined/aspecting planet
+                if (baseLordships[p]) {
+                    baseLordships[p].forEach(h => nodeLords.add(h));
+                }
+            }
+        });
+
+        // Convert the Set back to a sorted array
+        baseLordships[node] = Array.from(nodeLords).sort((a,b) => a - b);
+    });
+    // --- APPLY MATH ROTATION BASED ON "HOUSE START" ---
+    const natalInfo = {};
+    VIMSHOTTARI_ORDER.forEach(p => {
+        let deg = nData.planets[p];
+        let basePlaced = getBaseHouseOfDeg(deg);
+        let baseLords = baseLordships[p] || [];
+
+        // Rotate values mathematically instead of recalculating
+        let rotatedPlaced = ((basePlaced - houseStart + 12) % 12) + 1;
+        let rotatedLords = baseLords.map(h => ((h - houseStart + 12) % 12) + 1).sort((a,b)=>a-b);
+        let uniqueLorded = [...new Set(rotatedLords)];
+
+        natalInfo[p] = { placed: rotatedPlaced, lorded: uniqueLorded };
+    });
+
+    // Calculate Pivot Nakshatra for Tara logic globally for both tables
+    let janmaStarlord = "-";
+    let pivotNakIndex = 0;
+    let targetCusp = cuspsData.find(c => c.bhava === houseStart);
+    
+    if(targetCusp) {
+        janmaStarlord = targetCusp.starLord;
+        pivotNakIndex = NAK_LORDS.indexOf(janmaStarlord);
+        if(pivotNakIndex === -1) pivotNakIndex = 0;
+    }
+
+    // Reorder Vimshottari sequence so the Janma planet is always first
+    let dynamicVimshottari = [...VIMSHOTTARI_ORDER];
+    let janmaIndexInVim = VIMSHOTTARI_ORDER.indexOf(janmaStarlord);
+    if (janmaIndexInVim !== -1) {
+        dynamicVimshottari = [
+            ...VIMSHOTTARI_ORDER.slice(janmaIndexInVim),
+            ...VIMSHOTTARI_ORDER.slice(0, janmaIndexInVim)
+        ];
+    }
+
+    // Increased gap from 10px to 40px here for better spacing
+    let html = `<div style="display:flex; justify-content:space-evenly; gap:40px; flex-wrap:wrap; margin-top:10px;">`;
+
+    // TABLE 1: Natal Placement & Lordships (Cyclically Sorted from Janma)
+    html += `
+        <div style="flex:1; min-width:300px;">
+            <h3 style="text-align:center; color:#ffcc00; font-size:16px;">Natal Planets (Rotated to House Start)</h3>
+            <table style="width:100%; border-collapse:collapse; text-align:center; font-size:15px;">
+                <thead>
+                    <tr style="background:#0e006b; color:#ffcc00;">
+                        <th>Planet</th>
+                        <th>Tara</th>
+                        <th>Placed</th>
+                        <th>Lordship</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    dynamicVimshottari.forEach(p => {
+        const info = natalInfo[p];
+        const lordText = info.lorded.length > 0 ? info.lorded.join(",") : "-";
+        
+        const isRetro = checkRetrograde(p, nData, natal);
+        const rMark = isRetro ? " ℞" : "";
+        const pDisplay = p + rMark;
+
+        // Calculate Tara for the Planet itself relative to the Janma Starlord
+        let pIndex = NAK_LORDS.indexOf(p);
+        let pTaraIndex = (pIndex - pivotNakIndex + 9) % 9;
+        let pTaraName = TARA_NAMES[pTaraIndex];
+
+        html += `
+            <tr>
+                <td style="font-weight:bold; color:#00e5ff;">${pDisplay}</td>
+                <td style="color:#ffcc00; font-weight:bold;">${pTaraName}</td>
+                <td>${info.placed}</td>
+                <td>${lordText}</td>
+            </tr>
+        `;
+    });
+    html += `</tbody></table></div>`;
+
+    // TABLE 2: Transit Planets Tara Logic
+    if (tData) {
+        html += `
+            <div style="flex:2; min-width:600px;">
+                <h3 style="text-align:center; color:#00e5ff; font-size:16px;">Transit Planets Tara</h3>
+                <div style="text-align:center; color:#ffcc00; margin-bottom:8px; font-weight:bold;">
+                   House Start (${houseStart}) Starlord (Janma Tara Reference) : ${janmaStarlord}
+                </div>
+                <table style="width:100%; border-collapse:collapse; text-align:center; font-size:15px;">
+                    <thead>
+                        <tr style="background:#0e006b; color:#ffcc00;">
+                            <th>Transit</th>
+                            <th>Sign</th>
+                            <th>Nakshatra</th>
+                            <th>Nak Lord</th>
+                            <th>StarLord Transit</th>
+                            <th>Tara</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        
+        // Added Chandra to the end of the array here
+        const transitPlanetsToShow = ["Saturn", "Jupiter", "Rahu", "Ketu", "Mangala", "Venus", "Budha", "Surya", "Chandra"];
+        
+        transitPlanetsToShow.forEach(tp => {
+            const deg = tData.planets[tp];
+            const isRetro = checkRetrograde(tp, tData, transit);
+            const rMark = isRetro ? " ℞" : "";
+            const tpDisplay = tp + rMark;
+
+            const signIndex = Math.floor(deg / 30);
+            const signName = ZODIAC_SIGNS[signIndex];
+            
+            // Nakshatra and Pada calculation
+            const nakIndex = Math.floor(deg / (360/27));
+            const nakName = NAKSHATRAS[nakIndex];
+            const pada = Math.floor((deg % (360/27)) / (360/108)) + 1;
+            
+            const nakLord = NAK_LORDS[nakIndex % 9];
+
+            const nakLordIndex = NAK_LORDS.indexOf(nakLord);
+            const taraIndex = (nakLordIndex - pivotNakIndex + 9) % 9;
+            const taraName = TARA_NAMES[taraIndex];
+
+            const nLordInfo = natalInfo[nakLord];
+            
+            // Combine placed house and lorded houses, remove duplicates, and sort
+            let combinedHouses = [...nLordInfo.lorded, nLordInfo.placed];
+            let uniqueSortedHouses = [...new Set(combinedHouses)].sort((a, b) => a - b);
+            let combinedText = uniqueSortedHouses.join(",");
+
+            html += `
+                <tr>
+                    <td style="font-weight:bold; color:#00e5ff;">${tpDisplay}</td>
+                    <td>${signName}</td>
+                    <td>${nakName} - ${pada}</td>
+                    <td style="font-weight:bold;">${nakLord}</td>
+                    <td>${combinedText}</td>
+                    <td style="color:#ffcc00; font-weight:bold;">${taraName}</td>
+                </tr>
+            `;
+        });
+        html += `</tbody></table></div>`;
+    }
+
+    html += `</div>`;
+    container.innerHTML = html;
+
+    // --- BUILD TABLE-3 (CUSPAL INTERLINK) ---
+    let rotatedCusps = [];
+    let startIndex = cuspsData.findIndex(c => c.bhava === houseStart);
+    if(startIndex < 0) startIndex = 0;
+    
+    for(let i=0; i<12; i++){
+        rotatedCusps.push(cuspsData[(startIndex + i) % 12]);
+    }
+
+    let t3Html = `
+    <h3 style="text-align:center; color:#ffcc00; font-size:18px;">Table-3 : Cuspal Interlink Chart (Rotated)</h3>
+    <table style="width:100%; border-collapse:collapse; text-align:center; font-size:15px;">
+        <thead>
+            <tr>
+                <th>Bhava</th>
+                <th>Sign</th>
+                <th>Degree</th>
+                <th>Sign Lord</th>
+                <th>Star Lord</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+
+    rotatedCusps.forEach((c) => {
+        t3Html += `
+        <tr>
+            <td style="color:#ffcc00; font-weight:bold;">${c.bhava}</td>
+            <td>${c.sign}</td>
+            <td>${String(c.deg).padStart(2,"0")}° ${String(c.min).padStart(2,"0")}' ${String(c.sec).padStart(2,"0")}"</td>
+            <td>${c.signLord}</td>
+            <td style="color:#00e5ff; font-weight:bold;">${c.starLord}</td>
+        </tr>
+        `;
+    });
+
+    t3Html += `</tbody></table>`;
+    document.getElementById("pivotCuspalTable").innerHTML = t3Html;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --------------------------------------------------------
+
 function render(){
     const k = document.getElementById("chart");
     k.innerHTML="";
 
-
-
-
-
-if(!natal){
-
+    if(!natal){
         const map=[11,0,1,2,10,-1,-1,3,9,-1,-1,4,8,7,6,5];
-
         map.forEach((idx, mapIndex)=>{
             const h=document.createElement("div");
             h.className="house";
-
             if(idx===-1){
                 if(!k.querySelector(".center-box")){
                     const cb=document.createElement("div");
@@ -1194,491 +1499,252 @@ if(!natal){
                 k.appendChild(h);
             }
         });
-
-        /* ===== DEFAULT ROW HEIGHTS WHEN EMPTY ===== */
-        
         return;
-}
+    }
 
+    const nData = natal.ayanamshas["Lahiri"];
+    const tData = transit ? transit.ayanamshas["Lahiri"] : null;
 
-/* ===== LOAD NATAL + TRANSIT DATA ===== */
-const nData = natal.ayanamshas["Lahiri"];
-const tData = transit ? transit.ayanamshas["Lahiri"] : null;
+    let birthText="Birth Date : --";
+    let transitText="Transit Date : --";
 
+    if(natal && natal.meta && natal.meta.datetime_utc){
+        const dt=new Date(natal.meta.datetime_utc);
+        dt.setMinutes(dt.getMinutes()+330); 
+        const d=String(dt.getUTCDate()).padStart(2,"0");
+        const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+        const m=monthNames[dt.getUTCMonth()];
+        const y=dt.getUTCFullYear();
+        const hh=String(dt.getUTCHours()).padStart(2,"0");
+        const mm=String(dt.getUTCMinutes()).padStart(2,"0");
+        const ss=String(dt.getUTCSeconds()).padStart(2,"0");
+        birthText=`Birth Date : ${d} ${m} ${y}  ${hh}:${mm}:${ss}`;
+    }
 
-/* ===============================
-   UPDATE DATE BAR
-   =============================== */
+    if(transit && transit.meta && transit.meta.datetime_utc){
+        const dt=new Date(transit.meta.datetime_utc);
+        dt.setMinutes(dt.getMinutes()+330); 
+        const d=String(dt.getUTCDate()).padStart(2,"0");
+        const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+        const m=monthNames[dt.getUTCMonth()];
+        const y=dt.getUTCFullYear();
+        const hh=String(dt.getUTCHours()).padStart(2,"0");
+        const mm=String(dt.getUTCMinutes()).padStart(2,"0");
+        const ss=String(dt.getUTCSeconds()).padStart(2,"0");
+        transitText=`Transit Date : ${d} ${m} ${y}  ${hh}:${mm}:${ss}`;
+    }
 
-let birthText="Birth Date : --";
-let transitText="Transit Date : --";
+    document.getElementById("birthDateText").textContent=birthText;
+    document.getElementById("transitDateText").textContent=transitText;
 
-if(natal && natal.meta && natal.meta.datetime_utc){
+    const ascSign = Math.floor(nData.lagna/30);
+    const includeRahu = document.getElementById("includeRahuSAV")?.checked;
+    const mode = document.getElementById("savMode")?.value || "SAV";
 
-    const dt=new Date(natal.meta.datetime_utc);
-dt.setMinutes(dt.getMinutes()+330); // convert UTC → IST
+    let SAV;
+    if(mode==="SAV"){
+        SAV = calcSAV(nData, includeRahu);
+    }else{
+        SAV = calcSingleBAV(nData, mode);
+    }
 
-    const d=String(dt.getUTCDate()).padStart(2,"0");
-    const monthNames=[
-"January","February","March","April","May","June",
-"July","August","September","October","November","December"
-];
+    const pivot = document.getElementById("pivotSelect")?.value || "ASC";
+    let pivotDeg = nData.lagna;
+    if(pivot==="ASC"){ pivotDeg = nData.lagna; }
+    else if(pivot.startsWith("C")){ const cNum = parseInt(pivot.substring(1)); pivotDeg = nData.cusps[cNum]; }
+    else if(nData.planets[pivot]!==undefined){ pivotDeg = nData.planets[pivot]; }
 
-const m=monthNames[dt.getUTCMonth()];
+    const pivotLocalDeg = pivotDeg % 30;
+    const revertASC = document.getElementById("revertASC")?.checked;
 
-    const y=dt.getUTCFullYear();
+    if(pivotLocalDeg >= 15 && !revertASC){
+        const rotated = Array(12);
+        for(let i=0;i<12;i++){ rotated[(i+1)%12] = SAV[i]; }
+        SAV = rotated;
+    }
 
-    const hh=String(dt.getUTCHours()).padStart(2,"0");
-    const mm=String(dt.getUTCMinutes()).padStart(2,"0");
-    const ss=String(dt.getUTCSeconds()).padStart(2,"0");
+    const pivotSign = Math.floor(pivotDeg/30); 
+    let houseNumberingOffset = 0;
+    if((pivotDeg % 30) >= 15 && !revertASC){
+        houseNumberingOffset = 1; 
+    }
 
-    birthText=`Birth Date : ${d} ${m} ${y}  ${hh}:${mm}:${ss}`;
-}
-
-if(transit && transit.meta && transit.meta.datetime_utc){
-
-    const dt=new Date(transit.meta.datetime_utc);
-dt.setMinutes(dt.getMinutes()+330); // convert UTC → IST
-
-    const d=String(dt.getUTCDate()).padStart(2,"0");
-
-	const monthNames=[
-	"January","February","March","April","May","June",
-	"July","August","September","October","November","December"
-	];
-
-	const m=monthNames[dt.getUTCMonth()];
-
-	const y=dt.getUTCFullYear();
-
-    const hh=String(dt.getUTCHours()).padStart(2,"0");
-    const mm=String(dt.getUTCMinutes()).padStart(2,"0");
-    const ss=String(dt.getUTCSeconds()).padStart(2,"0");
-
-    transitText=`Transit Date : ${d} ${m} ${y}  ${hh}:${mm}:${ss}`;
-}
-
-document.getElementById("birthDateText").textContent=birthText;
-document.getElementById("transitDateText").textContent=transitText;
-
-
-
-
-
-		const ascSign = Math.floor(nData.lagna/30);
-		const includeRahu = document.getElementById("includeRahuSAV")?.checked;
-		const mode = document.getElementById("savMode")?.value || "SAV";
-
-		let SAV;
-		if(mode==="SAV"){
-			SAV = calcSAV(nData, includeRahu);
-		}else{
-			SAV = calcSingleBAV(nData, mode);
-		}
-
-		const pivot = document.getElementById("pivotSelect")?.value || "ASC";
-
-			
-	
-	
-	let pivotDeg = nData.lagna;
-
-	if(pivot==="ASC"){
-		pivotDeg = nData.lagna;
-	}
-	else if(pivot.startsWith("C")){
-		const cNum = parseInt(pivot.substring(1));
-		pivotDeg = nData.cusps[cNum];
-	}
-	else if(nData.planets[pivot]!==undefined){
-		pivotDeg = nData.planets[pivot];
-	}
-
-	
-	
-	
-	
-
-	/* ==========================================================
-	   ROTATE SAV IF PIVOT IS 15°00′–29°59′ (HALF SIGN SHIFT)
-	   ========================================================== */
-	const pivotLocalDeg = pivotDeg % 30;
-
-	const revertASC = document.getElementById("revertASC")?.checked;
-
-	if(pivotLocalDeg >= 15 && !revertASC){
-		const rotated = Array(12);
-		for(let i=0;i<12;i++){
-			rotated[(i+1)%12] = SAV[i]; // shift to next sign cyclically
-		}
-		SAV = rotated;
-	}
-
-
-	
-	
-	
-	
-	
-	
-
-	const pivotSign = Math.floor(pivotDeg/30); // zodiac reference stays fixed
-
-	/* ==========================================================
-	   HOUSE NUMBERING HALF-SIGN SHIFT (ONLY NUMBERING)
-	   ========================================================== */
-	let houseNumberingOffset = 0;
-
-	if((pivotDeg % 30) >= 15 && !revertASC){
-		houseNumberingOffset = 1; // next sign becomes house 1
-	}
-
-
-
-	const houseStart = parseInt(document.getElementById("houseStart")?.value || "1");
-
-
+    const hsValStr = document.getElementById("houseStart")?.value || "1";
+    let houseStart = 1;
+    if (!isNaN(parseInt(hsValStr))) {
+        houseStart = parseInt(hsValStr);
+    } else if (nData && nData.planets[hsValStr] !== undefined) {
+        // If a planet is selected, calculate which visual box it sits in to assign '1' correctly
+        const pDeg = nData.planets[hsValStr];
+        const pSign = Math.floor(pDeg / 30);
+        const pivotVisualStartSign = (pivotSign + houseNumberingOffset) % 12;
+        houseStart = ((pSign - pivotVisualStartSign + 12) % 12) + 1;
+    }
 
     let chart = Array(12).fill().map(()=>[]);
 
-	/* ==========================================================
-	   NATAL PLANETS (always shown)
-	   ========================================================== */
-	planets.forEach(p=>{
-		const deg = nData.planets[p];
-		const s = Math.floor(deg/30);
-
-		const isRetro = nData.planets_retro && nData.planets_retro[p];
-		const rMark = isRetro ? " (R)" : "";
-
-		const showLordship = document.getElementById("showLordship")?.checked;
-		
-		
-		
-		let lordText="";
-
-		if(showLordship){
-			const lordships=getPlanetLordships(nData);
-			const arr=lordships[p];
-			if(arr && arr.length){
-				lordText=" {"+arr.join(",")+"}";
-			}
-		}
-
-		chart[s].push({
-				text:p.substring(0,2)+lordText+" "+degToText(deg)+rMark,
-				cls:"p-line"
-			});
-	
-	
-	
-	
-});
-
-/* ==========================================================
-   TRANSIT PLANETS (with hide filters)
-   ========================================================== */
-   if(tData){
-
-    const hideMinor = document.getElementById("hideMinorTransit")?.checked;
-    const hideRaKe = document.getElementById("hideRaKeTransit")?.checked;
-
-    const minorTransitSet = ["Surya","Chandra","Mangala","Venus","Budha"];
-    const rakeSet = ["Rahu","Ketu"];
-
     planets.forEach(p=>{
-
-        if(hideMinor && minorTransitSet.includes(p)) return;
-        if(hideRaKe && rakeSet.includes(p)) return;
-
-        const deg = tData.planets[p];
+        const deg = nData.planets[p];
         const s = Math.floor(deg/30);
+        const isRetro = checkRetrograde(p, nData, natal);
+        const rMark = isRetro ? "℞" : "";
+        const showLordship = document.getElementById("showLordship")?.checked;
+        
+        let lordText="";
+        if(showLordship){
+            const lordships=getPlanetLordships(nData);
+            const arr=lordships[p];
+            if(arr && arr.length){ lordText=" {"+arr.join(",")+"}"; }
+        }
 
-        const isRetro = tData.planets_retro && tData.planets_retro[p];
-        const rMark = isRetro ? " (R)" : "";
-
-        chart[s].push({
-            text:"T-"+p.substring(0,2)+" "+degToText(deg)+rMark,
-            cls:"transit-line"
-        });
+        chart[s].push({ text:p.substring(0,2)+rMark+lordText+" "+degToText(deg), cls:"p-line" });
     });
-}
 
+   if(tData){
+        const hideMinor = document.getElementById("hideMinorTransit")?.checked;
+        const hideRaKe = document.getElementById("hideRaKeTransit")?.checked;
+        const minorTransitSet = ["Surya","Chandra","Mangala","Venus","Budha"];
+        const rakeSet = ["Rahu","Ketu"];
 
-/* ===== ROW HEIGHT TRACKER (REQUIRED FOR DYNAMIC GRID) ===== */
-let rowMaxItems = [1,1,1,1];
-let cellIndex = 0;
+        planets.forEach(p=>{
+            if(hideMinor && minorTransitSet.includes(p)) return;
+            if(hideRaKe && rakeSet.includes(p)) return;
+            const deg = tData.planets[p];
+            const s = Math.floor(deg/30);
+            const isRetro = checkRetrograde(p, tData, transit);
+            const rMark = isRetro ? "℞" : "";
 
+            chart[s].push({ text:"T-"+p.substring(0,2)+rMark+" "+degToText(deg), cls:"transit-line" });
+        });
+    }
 
-const map=[11,0,1,2,10,-1,-1,3,9,-1,-1,4,8,7,6,5];
+    let rowMaxItems = [1,1,1,1];
+    let cellIndex = 0;
+    const map=[11,0,1,2,10,-1,-1,3,9,-1,-1,4,8,7,6,5];
 
-map.forEach((idx, mapIndex)=>{
-    const h=document.createElement("div");
-    h.className="house";
+    map.forEach((idx, mapIndex)=>{
+        const h=document.createElement("div");
+        h.className="house";
 
-    if(idx===-1){
-		h.className="house center-box";
-		h.innerText="Transit Mixer";
-		k.appendChild(h);
-	}else{
+        if(idx===-1){
+            h.className="house center-box";
+            h.innerText="Transit Mixer";
+            k.appendChild(h);
+        }else{
+            let cuspHouseNum=((idx-pivotSign+12)%12)+1;
+            cuspHouseNum=((cuspHouseNum-houseStart+12)%12)+1;
 
-            
-			
-			
-			
-			
-			/* ==========================================================
-		   ORIGINAL HOUSE NUMBER (FOR CUSP + ASC ONLY — NEVER SHIFT)
-		   ========================================================== */
-		let cuspHouseNum=((idx-pivotSign+12)%12)+1;
-		cuspHouseNum=((cuspHouseNum-houseStart+12)%12)+1;
+            let displayHouseNum=((idx - (pivotSign + houseNumberingOffset) + 12)%12)+1;
+            displayHouseNum=((displayHouseNum-houseStart+12)%12)+1;
 
-		/* ==========================================================
-		   DISPLAY HOUSE NUMBER (SHIFTED WHEN ≥15°)
-		   ========================================================== */
-		let displayHouseNum=((idx - (pivotSign + houseNumberingOffset) + 12)%12)+1;
-		displayHouseNum=((displayHouseNum-houseStart+12)%12)+1;
-
-		h.innerHTML+=`<div class="house-num">${displayHouseNum}</div>`;
-		h.innerHTML+=`<div class="sav-box">${SAV[idx]}</div>`;
-
-
-
-
-            
+            h.innerHTML+=`<div class="house-num">${displayHouseNum}</div>`;
+            h.innerHTML+=`<div class="sav-box">${SAV[idx]}</div>`;
 
             let items = [];
-			const contentBox = document.createElement("div");
-			contentBox.style.display = "flex";
-			contentBox.style.flexDirection = "column";
-			contentBox.style.alignItems = "center";
-			contentBox.style.justifyContent = "center"; // Added for vertical centering if space allows
-			contentBox.style.width = "100%";
-			contentBox.style.margin = "0 auto"; // Ensures the box itself is centered
+            const contentBox = document.createElement("div");
+            contentBox.style.display = "flex";
+            contentBox.style.flexDirection = "column";
+            contentBox.style.alignItems = "center";
+            contentBox.style.justifyContent = "center"; 
+            contentBox.style.width = "100%";
+            contentBox.style.margin = "0 auto"; 
 
+            const hideCusps = document.getElementById("hideCusps")?.checked;
+            let cuspDeg;
+            const hsDropdownVal = document.getElementById("houseStart")?.value || "1";
 
-			// add cusp + ASC
-		const hideCusps = document.getElementById("hideCusps")?.checked;
-		let cuspDeg;
+            if (isNaN(parseInt(hsDropdownVal)) && nData.planets[hsDropdownVal] !== undefined) {
+                // Force visual 30-degree slices starting exactly from the planet's degree
+                const planetStartDeg = nData.planets[hsDropdownVal];
+                cuspDeg = (planetStartDeg + (cuspHouseNum - 1) * 30) % 360;
+            } else if(pivot==="ASC"){
+                const realCuspIndex = ((cuspHouseNum + houseStart - 2) % 12) + 1;
+                cuspDeg = nData.cusps[realCuspIndex];
+            } else {
+                cuspDeg = (pivotDeg + (cuspHouseNum - 1) * 30) % 360;
+            }
 
+            const cuspLocal = cuspDeg % 30;
 
+            if(cuspHouseNum===1){
+                items.push({ text: "ASC "+degToText(cuspDeg), deg: cuspLocal, cls: "asc-line" });
+            }
 
+            if(!hideCusps && cuspHouseNum!==1){
+                items.push({ text: "Cusp "+cuspHouseNum+": "+degToText(cuspDeg), deg: cuspLocal, cls: "cusp-line" });
+            }
 
+            chart[idx].forEach(p=>{
+                const m = p.text.match(/(\d+)°(\d+)/);
+                let dVal = 0;
+                if(m){ dVal = parseInt(m[1]) + (parseInt(m[2])/60); }
+                items.push({ text: p.text, deg: dVal, cls: p.cls });
+            });
 
+            if(idx <= 5){ items.sort((a,b)=>a.deg-b.deg); }
+            else{ items.sort((a,b)=>b.deg-a.deg); }
+            
+            const row = Math.floor(mapIndex / 4);
+            rowMaxItems[row] = Math.max(rowMaxItems[row], items.length);
 
-		if(pivot==="ASC"){
-		const realCuspIndex = ((cuspHouseNum + houseStart - 2) % 12) + 1;
-		cuspDeg = nData.cusps[realCuspIndex];
-		}else{
-		cuspDeg = (pivotDeg + (cuspHouseNum-1)*30) % 360;
-		}
+            items.forEach(it=>{
+                const d = document.createElement("div");
+                d.className = "p-line " + it.cls;
+                d.textContent = it.text;
+                contentBox.appendChild(d);
+            });
 
-
-
-
-		const cuspLocal = cuspDeg % 30;
-
-
-		// ASC must follow rotated house start
-		if(cuspHouseNum===1){
-			items.push({
-				text: "ASC "+degToText(cuspDeg),
-				deg: cuspLocal,
-				cls: "asc-line"
-			});
-		}
-
-
-		if(!hideCusps && cuspHouseNum!==1){
-		items.push({
-			text: "Cusp "+cuspHouseNum+": "+degToText(cuspDeg),
-			deg: cuspLocal,
-			cls: "cusp-line"
-		});
-		}
-
-
-
-
-			// add natal + transit planets
-			chart[idx].forEach(p=>{
-			const m = p.text.match(/(\d+)°(\d+)/);
-			let dVal = 0;
-			if(m){
-				dVal = parseInt(m[1]) + (parseInt(m[2])/60);
-			}
-			items.push({
-				text: p.text,
-				deg: dVal,
-				cls: p.cls
-			});
-		});
-
-
-
-
-
-
-			// sorting logic
-			if(idx <= 5){
-				items.sort((a,b)=>a.deg-b.deg); // Aries–Virgo ascending
-			}else{
-				items.sort((a,b)=>b.deg-a.deg); // Libra–Pisces descending
-			}
-			
-			
-			
-			/* measure row density */
-			const row = Math.floor(mapIndex / 4);
-			rowMaxItems[row] = Math.max(rowMaxItems[row], items.length);
-
-
-			// render
-			items.forEach(it=>{
-			const d = document.createElement("div");
-			d.className = "p-line " + it.cls;
-			d.textContent = it.text;
-			contentBox.appendChild(d);
-		});
-
-		h.appendChild(contentBox);
-
-
-
-
-
-
-                        k.appendChild(h);
+            h.appendChild(contentBox);
+            k.appendChild(h);
             cellIndex++;
-
          }
     });
 
+    const TOTAL_HEIGHT = 650;
+    const MIN_ROW = 95;          
+    const EXTRA_GAP = 30;        
+    const HEADER_SPACE = 36;     
+    const LINE_HEIGHT = 22;      
 
+    let required = rowMaxItems.map(items=>{
+        const contentHeight = HEADER_SPACE + (items * LINE_HEIGHT) + EXTRA_GAP;
+        return Math.max(contentHeight, MIN_ROW);
+    });
 
+    let totalRequired = required.reduce((a,b)=>a+b,0);
 
+    if(totalRequired < TOTAL_HEIGHT){
+        const spare = TOTAL_HEIGHT - totalRequired;
+        const addPerRow = spare / 4;
+        required = required.map(h=>h + addPerRow);
+    }
+    else if(totalRequired > TOTAL_HEIGHT){
+        const overflow = totalRequired - TOTAL_HEIGHT;
+        const shrinkable = required.map(h=>h - MIN_ROW);
+        const totalShrinkable = shrinkable.reduce((a,b)=>a+b,0);
+        if(totalShrinkable > 0){
+            required = required.map((h,i)=>{
+                const share = (shrinkable[i]/totalShrinkable) * overflow;
+                return h - share;
+            });
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/* ==========================================================
-	   CONTENT-BASED ROW HEIGHT (SMART BALANCED)
-	   ========================================================== */
-
-	const TOTAL_HEIGHT = 650;
-	const MIN_ROW = 95;          // minimum readable row
-	const EXTRA_GAP = 30;        // guaranteed bottom breathing space
-	const HEADER_SPACE = 36;     // top header padding in house
-	const LINE_HEIGHT = 22;      // approx height per text line
-
-	/* ----------------------------------------------------------
-	   1. calculate REAL required height for each row
-	---------------------------------------------------------- */
-
-	let required = rowMaxItems.map(items=>{
-		const contentHeight =
-			HEADER_SPACE +
-			(items * LINE_HEIGHT) +
-			EXTRA_GAP;
-		return Math.max(contentHeight, MIN_ROW);
-	});
-
-	/* ----------------------------------------------------------
-	   2. sum total required
-	---------------------------------------------------------- */
-
-	let totalRequired = required.reduce((a,b)=>a+b,0);
-
-
-
-
-
-
-	/* ----------------------------------------------------------
-	   3A. if extra free space → distribute evenly
-	---------------------------------------------------------- */
-
-	if(totalRequired < TOTAL_HEIGHT){
-
-		const spare = TOTAL_HEIGHT - totalRequired;
-		const addPerRow = spare / 4;
-
-		required = required.map(h=>h + addPerRow);
-	}
-
-
-
-
-
-
-
-	/* ----------------------------------------------------------
-	   3B. if overflow → compress proportionally (safe)
-	---------------------------------------------------------- */
-
-	else if(totalRequired > TOTAL_HEIGHT){
-
-		const overflow = totalRequired - TOTAL_HEIGHT;
-
-		const shrinkable = required.map(h=>h - MIN_ROW);
-		const totalShrinkable = shrinkable.reduce((a,b)=>a+b,0);
-
-		if(totalShrinkable > 0){
-			required = required.map((h,i)=>{
-				const share = (shrinkable[i]/totalShrinkable) * overflow;
-				return h - share;
-			});
-		}
-	}
-
-	/* ----------------------------------------------------------
-	   4. apply final heights
-	---------------------------------------------------------- */
-
-	k.style.gridTemplateRows =
-		required.map(h=>h+"px").join(" ");
-		
-	renderSAVTable(nData, natal, transit);
+    k.style.gridTemplateRows = required.map(h=>h+"px").join(" ");
+        
+    renderSAVTable(nData, natal, transit);
     renderBAVTable(nData);
-	
-	if(transit){
-    buildTransitPlanetAspectTable();
-    buildTransitCuspAspectTable();
-    buildDoubleTransitTable();
+    renderAshtakavargaCharts(nData);
+    
+    if(transit){
+        buildTransitPlanetAspectTable();
+        buildTransitCuspAspectTable();
+        buildDoubleTransitTable();
+    }
+
+    // --- RENDER NEW NAKSHATRA TABLES ---
+    renderNakshatraTables(nData, tData);
 }
-
-
-
-	
-	
-	
-	
-	
-	
-}
-
-
-
-
-
-
-
-
-
-
-
 
 function renderSAVTable(nData, natalData, transitData){
     const container = document.getElementById("savTable");
@@ -1686,7 +1752,6 @@ function renderSAVTable(nData, natalData, transitData){
     if(!nData) return;
 
     const planets7 = ["Surya","Chandra","Mangala","Budha","Jupiter","Venus","Saturn"];
-
     const posSign = {};
     planets7.forEach(p=>posSign[p]=Math.floor(nData.planets[p]/30));
     posSign["Lagna"]=Math.floor(nData.lagna/30);
@@ -1697,7 +1762,6 @@ function renderSAVTable(nData, natalData, transitData){
     table.style.textAlign="center";
     table.style.fontSize="16px";
    
-
     function td(txt,bold=false){
         const c=document.createElement("td");
         c.textContent=txt;
@@ -1707,119 +1771,55 @@ function renderSAVTable(nData, natalData, transitData){
         return c;
     }
 
+    const signNames = ["Ars","Tau","Gem","Can","Leo","Vir","Lib","Scp","Sag","Cap","Aqu","Pis"];
+    const pivot = document.getElementById("pivotSelect")?.value || "ASC";
+    const revertASC = document.getElementById("revertASC")?.checked;
 
+    let pivotDeg = nData.lagna;
+    if(pivot==="ASC"){ pivotDeg = nData.lagna; }
+    else if(pivot.startsWith("C")){ const cNum = parseInt(pivot.substring(1)); pivotDeg = nData.cusps[cNum]; }
+    else if(nData.planets[pivot]!==undefined){ pivotDeg = nData.planets[pivot]; }
 
+    const pivotSign = Math.floor(pivotDeg/30);
+    const signOrder=[];
+    for(let i=0;i<12;i++){ signOrder.push(((pivotSign+i)%12)+1); }
 
-    // header with sign names
-	const signNames = [
-		"Ars","Tau","Gem","Can","Leo","Vir",
-		"Lib","Scp","Sag","Cap","Aqu","Pis"
-	];
+    let signLabelOffset = 0;
+    if((pivotDeg % 30) >= 15 && !revertASC){ signLabelOffset = 1; }
 
+    const trH=document.createElement("tr");
+    trH.appendChild(td("Sign",true));
 
+    signOrder.forEach(s=>{
+        const shifted = ((s-1+signLabelOffset)%12)+1;
+        const c = td(signNames[shifted-1],true);
+        c.style.color="#00e5ff";
+        trH.appendChild(c);
+    });
 
+    trH.appendChild(td("",true));
+    table.appendChild(trH);
 
+    const trHouse=document.createElement("tr");
+    trHouse.appendChild(td("House",true));
 
+    for(let i=1;i<=12;i++){
+        const c = td(i,true);
+        c.style.color="#ffcc00";
+        trHouse.appendChild(c);
+    }
 
+    trHouse.appendChild(td("",true));
+    table.appendChild(trHouse);
 
-
-	const pivot = document.getElementById("pivotSelect")?.value || "ASC";
-	const revertASC = document.getElementById("revertASC")?.checked;
-
-	// get pivot degree (same logic as chart)
-	
-	
-	let pivotDeg = nData.lagna;
-
-	if(pivot==="ASC"){
-		pivotDeg = nData.lagna;
-	}
-	else if(pivot.startsWith("C")){
-		const cNum = parseInt(pivot.substring(1));
-		pivotDeg = nData.cusps[cNum];
-	}
-	else if(nData.planets[pivot]!==undefined){
-		pivotDeg = nData.planets[pivot];
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	const pivotSign = Math.floor(pivotDeg/30);
-
-	// build base sign order from pivot sign
-	const signOrder=[];
-	for(let i=0;i<12;i++){
-		signOrder.push(((pivotSign+i)%12)+1);
-	}
-
-	// half-sign shift logic (same as chart)
-	let signLabelOffset = 0;
-	if((pivotDeg % 30) >= 15 && !revertASC){
-		signLabelOffset = 1;
-	}
-
-
-
-
-
-
-	// SIGN NAME ROW
-	const trH=document.createElement("tr");
-	trH.appendChild(td("Sign",true));
-
-
-	signOrder.forEach(s=>{
-    const shifted = ((s-1+signLabelOffset)%12)+1;
-    const c = td(signNames[shifted-1],true);
-    c.style.color="#00e5ff";
-    trH.appendChild(c);
-});
-
-
-	trH.appendChild(td("",true));
-	table.appendChild(trH);
-
-	// HOUSE NUMBER ROW
-	const trHouse=document.createElement("tr");
-	trHouse.appendChild(td("House",true));
-
-
-	for(let i=1;i<=12;i++){
-		const c = td(i,true);
-		c.style.color="#ffcc00";
-		trHouse.appendChild(c);
-	}
-
-	trHouse.appendChild(td("",true));
-	table.appendChild(trHouse);
-
-
-
-
-
-
-
-
-    // calculate SAV
     let SAV = Array(12).fill(0);
 
     planets7.forEach(target=>{
         const row = Array(12).fill(0);
-
         [...planets7,"Lagna"].forEach(source=>{
             const rules = BAV_RULES[target][source];
             if(!rules) return;
-
             const sSign = posSign[source];
-
             rules.forEach(offset=>{
                 const z = (sSign+(offset-1))%12;
                 row[z]++;
@@ -1830,18 +1830,15 @@ function renderSAVTable(nData, natalData, transitData){
         const tr=document.createElement("tr");
         tr.appendChild(td(target));
         let total=0;
-
         signOrder.forEach(sign=>{
             const v=row[sign-1];
             tr.appendChild(td(v));
             total+=v;
         });
-
         tr.appendChild(td(total,true));
         table.appendChild(tr);
     });
 
-    // TOTAL row
     const trTotal=document.createElement("tr");
     trTotal.appendChild(td("Total",true));
     let grand=0;
@@ -1855,60 +1852,31 @@ function renderSAVTable(nData, natalData, transitData){
     trTotal.appendChild(td(grand,true));
     table.appendChild(trTotal);
 
-
-
-
-
-    // LAGNA row (CUSTOM LAGNA BAV RULES — DIRECT TARGET RULES)
-
-	const LAGNA_BAV_RULES = {
-		Surya:   [3,4,6,10,11,12],
-		Chandra: [3,6,10,11,12],
-		Mangala: [1,3,6,10,11],
-		Budha:   [1,2,4,6,8,10,11],
-		Jupiter: [1,2,4,5,6,7,9,10,11],
-		Venus:   [1,2,3,4,5,8,9],
-		Saturn:  [1,3,4,6,10,11],
-		Lagna:   [3,6,10,11]
-	};
-
-	const lagnaRow = Array(12).fill(0);
-	const lagnaSign = posSign["Lagna"];
-
-	Object.entries(LAGNA_BAV_RULES).forEach(([source, rules])=>{
-		const sSign = posSign[source];
-		if(sSign===undefined) return;
-
-		rules.forEach(offset=>{
-			const z=(sSign+(offset-1))%12;
-			lagnaRow[z]++;
-		});
-	});
-
-
-
-
+    const lagnaRow = Array(12).fill(0);
+    Object.entries(LAGNA_BAV_RULES_GLOBAL).forEach(([source, rules])=>{
+        const sSign = posSign[source];
+        if(sSign===undefined) return;
+        rules.forEach(offset=>{
+            const z=(sSign+(offset-1))%12;
+            lagnaRow[z]++;
+        });
+    });
 
     const trLagna=document.createElement("tr");
     trLagna.appendChild(td("Lagna",true));
     let lagTot=0;
-
     signOrder.forEach(sign=>{
         const v=lagnaRow[sign-1];
         trLagna.appendChild(td(v,true));
         lagTot+=v;
     });
-
     trLagna.appendChild(td(lagTot,true));
     table.appendChild(trLagna);
 
-    // RAHU row (ALWAYS ADDED)
     const rahuRow = Array(12).fill(0);
-
     [...planets7,"Lagna"].forEach(source=>{
         const rules = BAV_RULES["Rahu"][source];
         const sSign = posSign[source];
-
         if(rules){
             rules.forEach(offset=>{
                 const z=(sSign+(offset-1))%12;
@@ -1920,50 +1888,29 @@ function renderSAVTable(nData, natalData, transitData){
     const trRahu=document.createElement("tr");
     trRahu.appendChild(td("Rahu",true));
     let rTot=0;
-
     signOrder.forEach(sign=>{
         const v=rahuRow[sign-1];
         trRahu.appendChild(td(v,true));
         rTot+=v;
     });
-
     trRahu.appendChild(td(rTot,true));
     table.appendChild(trRahu);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
+    
     container.appendChild(table);
 }
 
-
-
-
-
-
 function renderBAVTable(nData){
-
     const container = document.getElementById("bavTable");
     container.innerHTML="";
     if(!nData) return;
 
     const target = document.getElementById("bavSelect")?.value || "Saturn";
-
     const table = document.createElement("table");
     table.style.width="100%";
     table.style.borderCollapse="collapse";
     table.style.textAlign="center";
     table.style.fontSize="16px";
    
-
     function td(txt,bold=false){
         const c=document.createElement("td");
         c.textContent=txt;
@@ -1973,241 +1920,170 @@ function renderBAVTable(nData){
         return c;
     }
 
-    const signNames = [
-        "Ars","Tau","Gem","Can","Leo","Vir",
-        "Lib","Scp","Sag","Cap","Aqu","Pis"
-    ];
-
-    /* ===============================
-       SAME SIGN ROTATION AS SAV TABLE
-       =============================== */
-
+    const signNames = ["Ars","Tau","Gem","Can","Leo","Vir","Lib","Scp","Sag","Cap","Aqu","Pis"];
     const pivot = document.getElementById("pivotSelect")?.value || "ASC";
     const revertASC = document.getElementById("revertASC")?.checked;
 
     let pivotDeg = nData.lagna;
-
-    if(pivot==="ASC"){
-        pivotDeg = nData.lagna;
-    }
-    else if(pivot.startsWith("C")){
-        const cNum = parseInt(pivot.substring(1));
-        pivotDeg = nData.cusps[cNum];
-    }
-    else if(nData.planets[pivot]!==undefined){
-        pivotDeg = nData.planets[pivot];
-    }
+    if(pivot==="ASC"){ pivotDeg = nData.lagna; }
+    else if(pivot.startsWith("C")){ const cNum = parseInt(pivot.substring(1)); pivotDeg = nData.cusps[cNum]; }
+    else if(nData.planets[pivot]!==undefined){ pivotDeg = nData.planets[pivot]; }
 
     const pivotSign = Math.floor(pivotDeg/30);
-
     const signOrder=[];
-    for(let i=0;i<12;i++){
-        signOrder.push(((pivotSign+i)%12)+1);
-    }
+    for(let i=0;i<12;i++){ signOrder.push(((pivotSign+i)%12)+1); }
 
     let signLabelOffset=0;
-    if((pivotDeg % 30)>=15 && !revertASC){
-        signLabelOffset=1;
-    }
-
-    /* ===============================
-       ROW 1 — SIGN NAMES
-       =============================== */
+    if((pivotDeg % 30)>=15 && !revertASC){ signLabelOffset=1; }
 
     const trSign=document.createElement("tr");
-    
     trSign.appendChild(td(target+" BAV",true));
-
     signOrder.forEach(s=>{
         const shifted=((s-1+signLabelOffset)%12)+1;
         const c=td(signNames[shifted-1],true);
         c.style.color="#00e5ff";
         trSign.appendChild(c);
     });
-
     table.appendChild(trSign);
 
-    /* ===============================
-       ROW 2 — HOUSE NUMBERS
-       =============================== */
-
     const trHouse=document.createElement("tr");
- 
     trHouse.appendChild(td("House",true));
-
     for(let i=1;i<=12;i++){
         const c=td(i,true);
         c.style.color="#ffcc00";
         trHouse.appendChild(c);
     }
-
     table.appendChild(trHouse);
 
-    /* ===============================
-       PLANET POSITIONS
-       =============================== */
-
-	   const contributors=[
-		"Surya","Chandra","Mangala","Budha",
-		"Jupiter","Venus","Saturn","Lagna"
-	];
-
-
+    const contributors=["Surya","Chandra","Mangala","Budha","Jupiter","Venus","Saturn","Lagna"];
     const planets7=["Surya","Chandra","Mangala","Budha","Jupiter","Venus","Saturn"];
-
     const posSign={};
     planets7.forEach(p=>posSign[p]=Math.floor(nData.planets[p]/30));
     posSign["Lagna"]=Math.floor(nData.lagna/30);
-
     const grandTotal=Array(12).fill(0);
 
-    /* ===============================
-       CONTRIBUTOR ROWS
-       =============================== */
-
     contributors.forEach(source=>{
-
         const row=Array(12).fill(0);
+        let rules;
+        if(target==="Lagna"){ rules = LAGNA_BAV_RULES_GLOBAL[source]; }
+        else{ rules = BAV_RULES[target]?.[source]; }
 
-      {
-		const rules=BAV_RULES[target]?.[source];
-		const sSign=posSign[source];
-		if(rules){
-			rules.forEach(offset=>{
-				const z=(sSign+(offset-1))%12;
-				row[z]=1;
-				grandTotal[z]+=1;
-			});
-		}
-	}
-
+        const sSign=posSign[source];
+        if(rules){
+            rules.forEach(offset=>{
+                const z=(sSign+(offset-1))%12;
+                row[z]=1;
+                grandTotal[z]+=1;
+            });
+        }
+        
         const tr=document.createElement("tr");
         tr.appendChild(td(source,true));
-
-        signOrder.forEach(sign=>{
-            tr.appendChild(td(row[sign-1]));
-        });
-
+        signOrder.forEach(sign=>{ tr.appendChild(td(row[sign-1])); });
         table.appendChild(tr);
     });
 
-    /* ===============================
-       TOTAL ROW (colored)
-       =============================== */
-
     const trTotal=document.createElement("tr");
-
-
     trTotal.appendChild(td("Total",true));
-
-    signOrder.forEach(sign=>{
-        trTotal.appendChild(td(grandTotal[sign-1],true));
-    });
-
+    signOrder.forEach(sign=>{ trTotal.appendChild(td(grandTotal[sign-1],true)); });
     table.appendChild(trTotal);
 
     container.appendChild(table);
 }
 
+function renderAshtakavargaCharts(nData){
+    const container=document.getElementById("ashtakavargaContainer");
+    container.innerHTML="";
+    const planetsOrder=["SAV","Lagna","Saturn","Jupiter","Rahu","Mangala","Surya","Venus","Budha","Chandra"];
 
-/* ======================================================
-   ASPECT SYSTEM (same as rotation tool)
-   ====================================================== */
+    function makeKundali(values,title){
+        const k=document.createElement("div");
+        k.className="ashta-kundali";
+        const map=[11,0,1,2,10,-1,-1,3,9,-1,-1,4,8,7,6,5];
+        map.forEach(idx=>{
+            if(idx===-1){
+                const c=document.createElement("div");
+                c.className="ashta-center";
+                c.innerText=title;
+                k.appendChild(c);
+            }else{
+                const c=document.createElement("div");
+                c.className="ashta-cell";
+                c.innerText=values[idx]??"";
+                k.appendChild(c);
+            }
+        });
+        return k;
+    }
+
+    const revertASC = document.getElementById("revertASC")?.checked;
+    const pivot = document.getElementById("pivotSelect")?.value || "ASC";
+    let pivotDeg = nData.lagna;
+    if(pivot==="ASC"){ pivotDeg = nData.lagna; }
+    else if(pivot.startsWith("C")){ const cNum=parseInt(pivot.substring(1)); pivotDeg=nData.cusps[cNum]; }
+    else if(nData.planets[pivot]!==undefined){ pivotDeg=nData.planets[pivot]; }
+
+    let SAV=calcSAV(nData,false);
+    if((pivotDeg % 30)>=15 && !revertASC){
+        const rotated=Array(12);
+        for(let i=0;i<12;i++){ rotated[(i+1)%12]=SAV[i]; }
+        SAV=rotated;
+    }
+
+    container.appendChild(makeKundali(SAV,"SAV"));
+
+    const grid=document.createElement("div");
+    grid.className="ashta-grid";
+
+    planetsOrder.slice(1).forEach(p=>{
+        let row=calcSingleBAV(nData,p);
+        if((pivotDeg % 30)>=15 && !revertASC){
+            const rotated=Array(12);
+            for(let i=0;i<12;i++){ rotated[(i+1)%12]=row[i]; }
+            row=rotated;
+        }
+        grid.appendChild(makeKundali(row,"BAV "+p));
+    });
+    container.appendChild(grid);
+}
 
 const WESTERN_ASPECTS = [
-
-  /* ================= WHITE ================= */
   { d:0,     o:8,   n:"Conjuct",  c:"aspect-white" },
   { d:180,   o:8,   n:"Oppo",     c:"aspect-bad" },
-
-  /* ================= GREEN ================= */
   { d:60,    o:6,   n:"Sextile",        c:"aspect-good" },
   { d:120,   o:8,   n:"Trine",          c:"aspect-good" },
   { d:72,    o:2,   n:"Quintile",       c:"aspect-good" },
   { d:144,   o:2,   n:"Biquintile",     c:"aspect-good" },
-
-  /* ================= YELLOW ================= */
   { d:18,    o:1,   n:"Vigintile",      c:"aspect-white" },
   { d:36,    o:1,   n:"Decile",         c:"aspect-white" },
   { d:54,    o:1,   n:"Tri-Vigintile",  c:"aspect-white" },
   { d:40,    o:1.5, n:"Novile",         c:"aspect-white" },
   { d:80,    o:1.5, n:"Binovile",       c:"aspect-white" },
-
-  /* ================= ORANGE ================= */
   { d:30,    o:3,   n:"Semi-Sextile",   c:"aspect-good" },
   { d:150,   o:4,   n:"Quincunx",       c:"aspect-bad" },
-
   { d:51.43,  o:1.5, n:"Septile",       c:"aspect-neutral" },
   { d:102.86, o:1.5, n:"Biseptile",     c:"aspect-neutral" },
   { d:154.29, o:1.5, n:"Triseptile",    c:"aspect-neutral" },
-
-  /* ================= RED ================= */
   { d:45,    o:3,   n:"Semi-Square",    c:"aspect-bad" },
   { d:90,    o:8,   n:"Square",         c:"aspect-bad" },
   { d:135,   o:3,   n:"Sesqui-Quadrate",c:"aspect-bad" },
   { d:165,   o:2,   n:"Quin-Decile",    c:"aspect-bad" }
 ];
 
-
-
-
-/* ======================================================
-   DEGREE QUALITY (FALLBACK — SAME AS ROTATION TOOL)
-   ====================================================== */
-
 function degreeQuality(diff){
-
-  if(
-    (diff>=0   && diff<=12)  ||
-    (diff>=54  && diff<=66)  ||
-    (diff>=114 && diff<=126)
-  ){
-    return {t:"Good",c:"aspect-good"};
-  }
-
-  if(
-    (diff>=39  && diff<=51)  ||
-    (diff>=84  && diff<=96)  ||
-    (diff>=129 && diff<=141) ||
-    (diff>=159 && diff<=171)
-  ){
-    return {t:"Bad",c:"aspect-bad"};
-  }
-
+  if((diff>=0 && diff<=12) || (diff>=54 && diff<=66) || (diff>=114 && diff<=126)){ return {t:"Good",c:"aspect-good"}; }
+  if((diff>=39 && diff<=51) || (diff>=84 && diff<=96) || (diff>=129 && diff<=141) || (diff>=159 && diff<=171)){ return {t:"Bad",c:"aspect-bad"}; }
   return {t:"Neutral",c:"aspect-neutral"};
 }
 
-
-
-
-
-
 function getAspectLabel(diff, rawDiff){
-
   for(const a of WESTERN_ASPECTS){
-
-    if(a.d===0){
-      if(diff<=a.o){
-        return `<span class="${a.c}">${a.n}</span>`;
-      }
-    }
-
-    else if(a.d===180){
-      if(Math.abs(rawDiff-180)<=a.o){
-        return `<span class="${a.c}">${a.n}</span>`;
-      }
-    }
-
-    else{
-      if(Math.abs(diff-a.d)<=a.o){
-        return `<span class="${a.c}">${a.n}</span>`;
-      }
-    }
-
+    if(a.d===0){ if(diff<=a.o){ return `<span class="${a.c}">${a.n}</span>`; } }
+    else if(a.d===180){ if(Math.abs(rawDiff-180)<=a.o){ return `<span class="${a.c}">${a.n}</span>`; } }
+    else{ if(Math.abs(diff-a.d)<=a.o){ return `<span class="${a.c}">${a.n}</span>`; } }
   }
-
   const q = degreeQuality(diff);
-return `<span class="${q.c}">${q.t}</span>`;
+  return `<span class="${q.c}">${q.t}</span>`;
 }
 
 function absDiff(a,b){
@@ -2216,370 +2092,184 @@ function absDiff(a,b){
   return diff;
 }
 
-/* ======================================================
-   TRANSIT → NATAL PLANET ASPECT TABLE
-   ====================================================== */
-
 function buildTransitPlanetAspectTable(){
+    if(!natal || !transit) return;
+    const nData = natal.ayanamshas["Lahiri"];
+    const tData = transit.ayanamshas["Lahiri"];
+    const table=document.querySelector("#planetAspectTable tbody");
+    const head=document.querySelector("#planetAspectTable thead tr");
+    const pivot = planetAspectPivot.value;
+    const start = planets.indexOf(pivot);
+    const ordered = [...planets.slice(start), ...planets.slice(0,start)];
 
-if(!natal || !transit) return;
+    head.innerHTML="<th>Transit</th>"+ordered.map(p=>{
+      const abs = nData.planets[p];
+      return `<th>${p}<br>${abs.toFixed(2)}°</th>`;
+    }).join("");
 
-const nData = natal.ayanamshas["Lahiri"];
-const tData = transit.ayanamshas["Lahiri"];
-
-const table=document.querySelector("#planetAspectTable tbody");
-const head=document.querySelector("#planetAspectTable thead tr");
-
-const pivot = planetAspectPivot.value;
-
-const start = planets.indexOf(pivot);
-
-const ordered = [
-  ...planets.slice(start),
-  ...planets.slice(0,start)
-];
-
-head.innerHTML="<th>Transit</th>"+ordered.map(p=>{
-
-  const abs = nData.planets[p];
-
-  return `<th>${p}<br>${abs.toFixed(2)}°</th>`;
-
-}).join("");
-
-table.innerHTML="";
-const doubleTransitHouses = [];
-
-ordered.forEach(p1=>{
-
- const abs1=tData.planets[p1];
-
- const tr=document.createElement("tr");
-
- let html=`<td>${p1}<br>${abs1.toFixed(2)}°</td>`;
-
- ordered.forEach(p2=>{
-
-    const abs2=nData.planets[p2];
-
-    const diff=absDiff(abs1,abs2);
-
-    html+=`<td>${getAspectLabel(diff,diff)}<br>${diff.toFixed(2)}°</td>`;
-
- });
-
- tr.innerHTML=html;
- table.appendChild(tr);
-
-});
-
+    table.innerHTML="";
+    ordered.forEach(p1=>{
+     const abs1=tData.planets[p1];
+     const tr=document.createElement("tr");
+     let html=`<td>${p1}<br>${abs1.toFixed(2)}°</td>`;
+     ordered.forEach(p2=>{
+        const abs2=nData.planets[p2];
+        const diff=absDiff(abs1,abs2);
+        html+=`<td>${getAspectLabel(diff,diff)}<br>${diff.toFixed(2)}°</td>`;
+     });
+     tr.innerHTML=html;
+     table.appendChild(tr);
+    });
 }
-
-/* ======================================================
-   TRANSIT → NATAL CUSP ASPECT TABLE
-   ====================================================== */
 
 function buildTransitCuspAspectTable(){
+    if(!natal || !transit) return;
+    const nData = natal.ayanamshas["Lahiri"];
+    const tData = transit.ayanamshas["Lahiri"];
+    const table=document.querySelector("#cuspAspectTable tbody");
+    const head=document.querySelector("#cuspAspectTable thead tr");
 
-if(!natal || !transit) return;
+    head.innerHTML="<th>Transit</th>"+[...Array(12)].map((_,i)=>{
+     const c=nData.cusps[i+1];
+     return `<th>C${i+1}<br>${c.toFixed(2)}°</th>`;
+    }).join("");
 
-const nData = natal.ayanamshas["Lahiri"];
-const tData = transit.ayanamshas["Lahiri"];
+    table.innerHTML="";
+    const pivot = planetAspectPivot.value;
+    const start = planets.indexOf(pivot);
+    const ordered = [...planets.slice(start), ...planets.slice(0,start)];
 
-const table=document.querySelector("#cuspAspectTable tbody");
-const head=document.querySelector("#cuspAspectTable thead tr");
-
-head.innerHTML="<th>Transit</th>"+[...Array(12)].map((_,i)=>{
-
- const c=nData.cusps[i+1];
-
- return `<th>C${i+1}<br>${c.toFixed(2)}°</th>`;
-
-}).join("");
-
-table.innerHTML="";
-
-const pivot = planetAspectPivot.value;
-
-const start = planets.indexOf(pivot);
-
-const ordered = [
-  ...planets.slice(start),
-  ...planets.slice(0,start)
-];
-
-ordered.forEach(p=>{
-
- const abs1=tData.planets[p];
-
- const tr=document.createElement("tr");
-
- let html=`<td>${p}<br>${abs1.toFixed(2)}°</td>`;
-
- for(let i=1;i<=12;i++){
-
-   const c=nData.cusps[i];
-
-   const diff=absDiff(abs1,c);
-
-   html+=`<td>${getAspectLabel(diff,diff)}<br>${diff.toFixed(2)}°</td>`;
-
- }
-
- tr.innerHTML=html;
- table.appendChild(tr);
-
-});
-
+    ordered.forEach(p=>{
+     const abs1=tData.planets[p];
+     const tr=document.createElement("tr");
+     let html=`<td>${p}<br>${abs1.toFixed(2)}°</td>`;
+     for(let i=1;i<=12;i++){
+       const c=nData.cusps[i];
+       const diff=absDiff(abs1,c);
+       html+=`<td>${getAspectLabel(diff,diff)}<br>${diff.toFixed(2)}°</td>`;
+     }
+     tr.innerHTML=html;
+     table.appendChild(tr);
+    });
 }
-
-
-
-
-
-
 
 function buildDoubleTransitTable(){
+    if(!natal || !transit) return;
+    const nData = natal.ayanamshas["Lahiri"];
+    const tData = transit.ayanamshas["Lahiri"];
+    const table = document.querySelector("#doubleTransitTable tbody");
+    table.innerHTML="";
+    const doubleTransitHouses = [];
 
-if(!natal || !transit) return;
+    const saturnDeg = tData.planets["Saturn"];
+    const jupiterDeg = tData.planets["Jupiter"];
+    const saturnHouse = getHouseOfDeg(saturnDeg);
+    const jupiterHouse = getHouseOfDeg(jupiterDeg);
+    const saturnAspects = [3,7,10].map(a=>((saturnHouse + a - 2) % 12) + 1);
+    const jupiterAspects = [5,7,9].map(a=>((jupiterHouse + a - 2) % 12) + 1);
 
-const nData = natal.ayanamshas["Lahiri"];
-const tData = transit.ayanamshas["Lahiri"];
+    function getHouseOfDeg(deg){
+        const sign2sign = document.getElementById("sign2sign")?.checked;
+        if(sign2sign){
+            const revertASC = document.getElementById("revertASC")?.checked;
+            let ascDeg = nData.lagna;
+            let ascSign = Math.floor(ascDeg/30);
+            let signShift = 0;
+            if((ascDeg % 30) >= 15 && !revertASC){ signShift = 1; }
+            ascSign = (ascSign + signShift) % 12;
+            const sign = Math.floor(deg/30);
+            return ((sign - ascSign + 12) % 12) + 1;
+        }
+        for(let i=1;i<=12;i++){
+            let start = nData.cusps[i];
+            let end = nData.cusps[i==12?1:i+1];
+            if(end < start) end += 360;
+            let d = deg;
+            if(d < start) d += 360;
+            if(d>=start && d<end) return i;
+        }
+        return null;
+    }
 
-const table = document.querySelector("#doubleTransitTable tbody");
-table.innerHTML="";
+    function checkAspect(planetHouse,targetHouse,planet){
+        let diff = (targetHouse - planetHouse + 12) % 12;
+        if(planet==="Saturn"){ if(diff===2 || diff===6 || diff===9) return true; }
+        if(planet==="Jupiter"){ if(diff===4 || diff===6 || diff===8) return true; }
+        return false;
+    }
 
-const doubleTransitHouses = [];
+    for(let h=1;h<=12;h++){
+        const pivot = document.getElementById("pivotSelect")?.value || "ASC";
+        const revertASC = document.getElementById("revertASC")?.checked;
+        let pivotDeg = nData.lagna;
+        if(pivot==="ASC"){ pivotDeg = nData.lagna; }
+        else if(pivot.startsWith("C")){ const cNum = parseInt(pivot.substring(1)); pivotDeg = nData.cusps[cNum]; }
+        else if(nData.planets[pivot]!==undefined){ pivotDeg = nData.planets[pivot]; }
 
+        let signOffset = 0;
+        if((pivotDeg % 30) >= 15 && !revertASC){ signOffset = 1; }
 
-const saturnDeg = tData.planets["Saturn"];
-const jupiterDeg = tData.planets["Jupiter"];
+        let cuspDeg = nData.cusps[h];
+        let sign = (Math.floor(cuspDeg/30) + signOffset) % 12;
+        let lord = SIGN_LORDS[sign];
+        let lordDeg = nData.planets[lord];
+        let lordHouse = getHouseOfDeg(lordDeg);
+        let saturnHouse = getHouseOfDeg(saturnDeg);
+        let jupiterHouse = getHouseOfDeg(jupiterDeg);
 
+        let saturnPos = saturnHouse===h;
+        let jupiterPos = jupiterHouse===h;
 
-const saturnHouse = getHouseOfDeg(saturnDeg);
-const jupiterHouse = getHouseOfDeg(jupiterDeg);
+        let saturnAsp = checkAspect(saturnHouse,h,"Saturn");
+        let jupiterAsp = checkAspect(jupiterHouse,h,"Jupiter");
 
-const saturnAspects = [3,7,10].map(a=>((saturnHouse + a - 2) % 12) + 1);
-const jupiterAspects = [5,7,9].map(a=>((jupiterHouse + a - 2) % 12) + 1);
+        let saturnConj = absDiff(saturnDeg,lordDeg)<=8;
+        let jupiterConj = absDiff(jupiterDeg,lordDeg)<=8;
 
+        let saturnAspLord = checkAspect(saturnHouse,getHouseOfDeg(lordDeg),"Saturn");
+        let jupiterAspLord = checkAspect(jupiterHouse,getHouseOfDeg(lordDeg),"Jupiter");
 
+        let saturnInfluence = saturnPos || saturnAsp || saturnConj || saturnAspLord;
+        let jupiterInfluence = jupiterPos || jupiterAsp || jupiterConj || jupiterAspLord;
 
-function getHouseOfDeg(deg){
+        if(saturnInfluence && jupiterInfluence){ doubleTransitHouses.push(h); }
 
-const sign2sign = document.getElementById("sign2sign")?.checked;
+        function yes(v){ return v ? "YES" : ""; }
 
+        const tr1 = document.createElement("tr");
+        tr1.innerHTML = `<td>Saturn -${saturnHouse}- ${saturnAspects.join(",")}</td><td>${lord} - ${lordHouse}</td><td>${h}</td><td>${yes(saturnPos)}</td><td>${yes(saturnAsp)}</td><td>${yes(saturnConj)}</td><td>${yes(saturnAspLord)}</td>`;
+        table.appendChild(tr1);
 
+        const tr2 = document.createElement("tr");
+        tr2.innerHTML = `<td>Jupiter -${jupiterHouse}- ${jupiterAspects.join(",")}</td><td>${lord} - ${lordHouse}</td><td>${h}</td><td>${yes(jupiterPos)}</td><td>${yes(jupiterAsp)}</td><td>${yes(jupiterConj)}</td><td>${yes(jupiterAspLord)}</td>`;
+        table.appendChild(tr2);
 
+        const tr3 = document.createElement("tr");
+        tr3.innerHTML = `<td colspan="7" style="border-top:3px double #ffcc00;"></td>`;
+        table.appendChild(tr3);
+    }
 
-if(sign2sign){
-
-const revertASC = document.getElementById("revertASC")?.checked;
-
-let ascDeg = nData.lagna;
-let ascSign = Math.floor(ascDeg/30);
-
-let signShift = 0;
-
-if((ascDeg % 30) >= 15 && !revertASC){
-    signShift = 1;
+    const summary = document.getElementById("doubleTransitSummary");
+    const summaryMirror = document.getElementById("doubleTransitSummaryMirror");
+    const text = "Double Transit Applied Successfully on : " + (doubleTransitHouses.length ? doubleTransitHouses.join("-") : "None");
+    summary.innerHTML = text;
+    if(summaryMirror) summaryMirror.innerHTML = text;
 }
-
-ascSign = (ascSign + signShift) % 12;
-
-const sign = Math.floor(deg/30);
-
-return ((sign - ascSign + 12) % 12) + 1;
-
-}
-
-
-
-
-for(let i=1;i<=12;i++){
-let start = nData.cusps[i];
-let end = nData.cusps[i==12?1:i+1];
-if(end < start) end += 360;
-let d = deg;
-if(d < start) d += 360;
-if(d>=start && d<end) return i;
-}
-
-
-
-
-return null;
-}
-
-
-
-
-
-
-
-function checkAspect(planetHouse,targetHouse,planet){
-
-let diff = (targetHouse - planetHouse + 12) % 12;
-
-/* Saturn KP aspects */
-if(planet==="Saturn"){
-if(diff===2 || diff===6 || diff===9) return true;
-}
-
-/* Jupiter KP aspects */
-if(planet==="Jupiter"){
-if(diff===4 || diff===6 || diff===8) return true;
-}
-
-return false;
-
-}
-
-
-
-
-
-
-for(let h=1;h<=12;h++){
-
-
-
-
-/* =========================================
-   APPLY SAME LAGNA SHIFT LOGIC AS CHART
-   ========================================= */
-
-const pivot = document.getElementById("pivotSelect")?.value || "ASC";
-const revertASC = document.getElementById("revertASC")?.checked;
-
-let pivotDeg = nData.lagna;
-
-if(pivot==="ASC"){
-    pivotDeg = nData.lagna;
-}
-else if(pivot.startsWith("C")){
-    const cNum = parseInt(pivot.substring(1));
-    pivotDeg = nData.cusps[cNum];
-}
-else if(nData.planets[pivot]!==undefined){
-    pivotDeg = nData.planets[pivot];
-}
-
-let signOffset = 0;
-
-if((pivotDeg % 30) >= 15 && !revertASC){
-    signOffset = 1;
-}
-
-
-
-
-
-
-let cuspDeg = nData.cusps[h];
-let sign = (Math.floor(cuspDeg/30) + signOffset) % 12;
-let lord = SIGN_LORDS[sign];
-let lordDeg = nData.planets[lord];
-let lordHouse = getHouseOfDeg(lordDeg);
-
-let saturnHouse = getHouseOfDeg(saturnDeg);
-let jupiterHouse = getHouseOfDeg(jupiterDeg);
-
-let saturnPos = saturnHouse===h;
-let jupiterPos = jupiterHouse===h;
-
-let saturnAsp = checkAspect(saturnHouse,h,"Saturn");
-let jupiterAsp = checkAspect(jupiterHouse,h,"Jupiter");
-
-let saturnConj = absDiff(saturnDeg,lordDeg)<=8;
-let jupiterConj = absDiff(jupiterDeg,lordDeg)<=8;
-
-let saturnAspLord = checkAspect(saturnHouse,getHouseOfDeg(lordDeg),"Saturn");
-let jupiterAspLord = checkAspect(jupiterHouse,getHouseOfDeg(lordDeg),"Jupiter");
-
-let saturnInfluence = saturnPos || saturnAsp || saturnConj || saturnAspLord;
-let jupiterInfluence = jupiterPos || jupiterAsp || jupiterConj || jupiterAspLord;
-
-if(saturnInfluence && jupiterInfluence){
-    doubleTransitHouses.push(h);
-}
-
-function yes(v){ return v ? "YES" : ""; }
-
-const tr1 = document.createElement("tr");
-tr1.innerHTML = `
-<td>Saturn -${saturnHouse}- ${saturnAspects.join(",")}</td>
-<td>${lord} - ${lordHouse}</td>
-<td>${h}</td>
-<td>${yes(saturnPos)}</td>
-<td>${yes(saturnAsp)}</td>
-<td>${yes(saturnConj)}</td>
-<td>${yes(saturnAspLord)}</td>
-`;
-table.appendChild(tr1);
-
-const tr2 = document.createElement("tr");
-tr2.innerHTML = `
-<td>Jupiter -${jupiterHouse}- ${jupiterAspects.join(",")}</td>
-<td>${lord} - ${lordHouse}</td>
-<td>${h}</td>
-<td>${yes(jupiterPos)}</td>
-<td>${yes(jupiterAsp)}</td>
-<td>${yes(jupiterConj)}</td>
-<td>${yes(jupiterAspLord)}</td>
-`;
-table.appendChild(tr2);
-
-const tr3 = document.createElement("tr");
-tr3.innerHTML = `
-<td colspan="7" style="border-top:3px double #ffcc00;"></td>
-`;
-table.appendChild(tr3);
-
-}
-
-
-const summary = document.getElementById("doubleTransitSummary");
-const summaryMirror = document.getElementById("doubleTransitSummaryMirror");
-
-const text =
-"Double Transit Applied Successfully on : " +
-(doubleTransitHouses.length ? doubleTransitHouses.join("-") : "None");
-
-summary.innerHTML = text;
-if(summaryMirror) summaryMirror.innerHTML = text;
-
-}
-
 
 render();
-
 
 document.querySelectorAll(".collapsible").forEach(head=>{
     head.onclick=()=>{
         head.classList.toggle("active");
         const body=head.nextElementSibling;
-        if(body.style.display==="block"){
-            body.style.display="none";
-        }else{
-            body.style.display="block";
-        }
+        if(body.style.display==="block"){ body.style.display="none"; }
+        else{ body.style.display="block"; }
     };
 });
 
-if(natal && transit){
-    buildDoubleTransitTable();
-}
-
-
-
-
-
-
-
-
-
-
-
+if(natal && transit){ buildDoubleTransitTable(); }
 </script>
+
+
 </body>
 </html>
